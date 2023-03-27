@@ -1,0 +1,15 @@
+<resources>
+
+    <style name="Server" parent="android:Theme.NoDisplay"/>
+    
+    <style name="Theme.VehicleMonitor" parent="android:Theme.Material.Light.DarkActionBar" />
+
+    <style name="Theme.VehicleMonitor.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.VehicleMonitor.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.VehicleMonitor.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

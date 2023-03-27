@@ -1,0 +1,5 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="VehicleMonitor" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    </style>
+</resources>
