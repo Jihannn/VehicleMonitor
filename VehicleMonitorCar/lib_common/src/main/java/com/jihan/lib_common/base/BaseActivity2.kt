@@ -1,11 +1,11 @@
-package com.jihan.lib_common.base.base
+package com.jihan.lib_common.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
-import com.jihan.lib_common.base.viewmodel.BaseViewModel2
+import com.jihan.lib_common.viewmodel.BaseViewModel2
 import java.lang.reflect.ParameterizedType
 //import com.jihan.lib_common.BR
 

@@ -1,8 +1,8 @@
-package com.jihan.lib_common.base.viewmodel;
+package com.jihan.lib_common.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 
-import com.jihan.lib_common.base.model.BaseRepository;
+import com.jihan.lib_common.model.BaseRepository;
 
 public abstract class BaseViewModel<M extends BaseRepository> extends ViewModel {
 

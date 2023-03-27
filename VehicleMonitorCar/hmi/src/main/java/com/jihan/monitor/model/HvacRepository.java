@@ -4,8 +4,8 @@ import android.text.TextUtils;
 
 import com.fwk.sdk.hvac.HvacManager;
 import com.fwk.sdk.hvac.IHvacCallback;
-import com.jihan.lib_common.base.model.BaseRepository;
-import com.jihan.lib_common.base.utils.LogUtils;
+import com.jihan.lib_common.model.BaseRepository;
+import com.jihan.lib_common.utils.LogUtils;
 import com.jihan.monitor.CarApp;
 
 public class HvacRepository extends BaseRepository {

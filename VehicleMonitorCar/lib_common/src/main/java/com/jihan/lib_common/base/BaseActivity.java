@@ -1,8 +1,6 @@
-package com.jihan.lib_common.base.base;
+package com.jihan.lib_common.base;
 
 
-
-import static com.jihan.lib_common.base.utils.LogUtils.TAG_VEHICLE;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.jihan.lib_common.base.utils.LogUtils;
+import com.jihan.lib_common.utils.LogUtils;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private final String TAG = TAG_VEHICLE + getClass().getSimpleName();
+    private final String TAG = LogUtils.TAG_VEHICLE + getClass().getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

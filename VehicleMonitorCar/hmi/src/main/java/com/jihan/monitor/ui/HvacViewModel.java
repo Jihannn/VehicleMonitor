@@ -4,9 +4,9 @@ import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.jihan.lib_common.base.utils.AppExecutors;
-import com.jihan.lib_common.base.utils.LogUtils;
-import com.jihan.lib_common.base.viewmodel.BaseViewModel;
+import com.jihan.lib_common.utils.AppExecutors;
+import com.jihan.lib_common.utils.LogUtils;
+import com.jihan.lib_common.viewmodel.BaseViewModel;
 import com.jihan.monitor.CarApp;
 import com.jihan.monitor.model.HvacCallback;
 import com.jihan.monitor.model.HvacRepository;

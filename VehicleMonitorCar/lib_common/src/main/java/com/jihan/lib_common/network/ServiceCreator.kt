@@ -1,9 +1,9 @@
-package com.jihan.lib_common.base.network
+package com.jihan.lib_common.network
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
-import com.jihan.lib_common.base.base.MyApplication.Companion.appContext
+import com.jihan.lib_common.base.MyApplication.Companion.appContext
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

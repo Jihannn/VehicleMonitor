@@ -1,4 +1,4 @@
-package com.jihan.lib_common.base.base;
+package com.jihan.lib_common.base;
 
 import android.os.Bundle;
 

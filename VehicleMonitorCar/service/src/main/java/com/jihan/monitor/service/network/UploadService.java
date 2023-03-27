@@ -1,6 +1,6 @@
 package com.jihan.monitor.service.network;
 
-import com.jihan.lib_common.base.model.BaseResponse;
+import com.jihan.lib_common.model.BaseResponse;
 import com.jihan.monitor.service.model.Vehicle;
 
 import retrofit2.Call;

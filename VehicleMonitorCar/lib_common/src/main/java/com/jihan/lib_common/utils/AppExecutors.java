@@ -1,6 +1,6 @@
-package com.jihan.lib_common.base.utils;
+package com.jihan.lib_common.utils;
 
-import static com.jihan.lib_common.base.utils.LogUtils.TAG_VEHICLE;
+import static com.jihan.lib_common.utils.LogUtils.TAG_VEHICLE;
 
 import android.os.Handler;
 import android.os.Looper;

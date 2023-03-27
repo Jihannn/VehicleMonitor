@@ -1,4 +1,4 @@
-package com.jihan.lib_common.base.model
+package com.jihan.lib_common.model
 
 data class BaseResponse<T>(
     val data: T,

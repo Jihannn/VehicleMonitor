@@ -1,7 +1,7 @@
 package com.jihan.monitor.ui;
 
 
-import com.jihan.lib_common.base.base.BaseMvvmActivity;
+import com.jihan.lib_common.base.BaseMvvmActivity;
 import com.jihan.monitor.R;
 import com.jihan.monitor.databinding.ActivityHvacBinding;
 import com.jihan.monitor.factory.AppInjection;

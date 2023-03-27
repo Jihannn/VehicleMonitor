@@ -1,41 +1,35 @@
-package com.jihan.lib_common.base.base;
+package com.jihan.lib_common.base;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.jihan.lib_common.base.viewmodel.BaseViewModel;
+import com.jihan.lib_common.viewmodel.BaseViewModel;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-public abstract class BaseMvvmFragment<Vm extends BaseViewModel, V extends ViewDataBinding> extends BaseBindingFragment<V> {
+public abstract class BaseMvvmActivity<Vm extends BaseViewModel, V extends ViewDataBinding> extends BaseBindingActivity<V> {
 
     protected Vm mViewModel;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         initViewModel();
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-        initObservable(mViewModel);
+        super.onCreate(savedInstanceState);
         if (getViewModelVariable() != 0) {
             mBinding.setVariable(getViewModelVariable(), mViewModel);
         }
-        return view;
+        mBinding.executePendingBindings();
+        initObservable(mViewModel);
     }
 
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
-        loadData(getViewModel());
+        loadData(mViewModel);
     }
 
     private void initViewModel() {
@@ -47,7 +41,7 @@ public abstract class BaseMvvmFragment<Vm extends BaseViewModel, V extends ViewD
             modelClass = (Class<Vm>) BaseViewModel.class;
         }
         Object  object = getViewModelOrFactory();
-        if (object instanceof ViewModel){
+        if (object instanceof BaseViewModel){
             mViewModel = (Vm) object;
         }else if (object instanceof ViewModelProvider.Factory){
             mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) object)
@@ -58,8 +52,13 @@ public abstract class BaseMvvmFragment<Vm extends BaseViewModel, V extends ViewD
         }
     }
 
+    /**
+     * 返回ViewModel的实例或ViewModelFactory实例
+     */
     protected abstract Object getViewModelOrFactory();
-
+    /**
+     * 返回XML中ViewModel的BR-ID
+     */
     protected abstract int getViewModelVariable();
 
     protected abstract void initObservable(Vm viewModel);

@@ -1,4 +1,4 @@
-package com.jihan.lib_common.base.viewmodel
+package com.jihan.lib_common.viewmodel
 
 import androidx.lifecycle.ViewModel
 

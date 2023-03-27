@@ -2,7 +2,7 @@ package com.jihan.monitor.service;
 
 import android.app.Application;
 
-import com.jihan.lib_common.base.base.MyApplication;
+import com.jihan.lib_common.base.MyApplication;
 
 public class ServiceApp extends MyApplication {
 

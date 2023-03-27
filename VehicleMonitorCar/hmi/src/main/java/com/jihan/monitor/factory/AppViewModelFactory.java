@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 
-import com.jihan.lib_common.base.utils.AppExecutors;
+import com.jihan.lib_common.utils.AppExecutors;
 import com.jihan.monitor.model.HvacRepository;
 import com.jihan.monitor.ui.HvacViewModel;
 

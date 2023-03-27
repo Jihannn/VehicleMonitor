@@ -1,4 +1,4 @@
-package com.jihan.lib_common.base.base
+package com.jihan.lib_common.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import com.jihan.lib_common.base.viewmodel.BaseViewModel2
+import com.jihan.lib_common.viewmodel.BaseViewModel2
 import java.lang.reflect.ParameterizedType
 //import com.jihan.lib_common.BR
 

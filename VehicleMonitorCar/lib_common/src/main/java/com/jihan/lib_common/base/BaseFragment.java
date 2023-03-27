@@ -1,6 +1,4 @@
-package com.jihan.lib_common.base.base;
-
-import static com.jihan.lib_common.base.utils.LogUtils.TAG_VEHICLE;
+package com.jihan.lib_common.base;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,11 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.jihan.lib_common.base.utils.LogUtils;
+import com.jihan.lib_common.utils.LogUtils;
 
 public abstract class BaseFragment extends Fragment {
 
-    private final String TAG = TAG_VEHICLE + getClass().getSimpleName();
+    private final String TAG = LogUtils.TAG_VEHICLE + getClass().getSimpleName();
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

@@ -1,11 +1,11 @@
-package com.jihan.lib_common.base.viewmodel;
+package com.jihan.lib_common.viewmodel;
 
 import android.app.Application;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.jihan.lib_common.base.model.BaseRepository;
+import com.jihan.lib_common.model.BaseRepository;
 
 public abstract class BaseAndroidViewModel<M extends BaseRepository> extends AndroidViewModel {
 

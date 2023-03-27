@@ -1,4 +1,4 @@
-package com.jihan.lib_common.base.utils;
+package com.jihan.lib_common.utils;
 
 import android.util.Log;
 

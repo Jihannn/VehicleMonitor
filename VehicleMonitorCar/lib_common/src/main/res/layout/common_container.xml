@@ -7,7 +7,7 @@
          而不用实际使用的Activity(继承自BaseVMBActivity)每次都调用一遍-->
         <variable
             name="viewModel"
-            type="com.jihan.lib_common.base.viewmodel.BaseViewModel" />
+            type="com.jihan.lib_common.viewmodel.BaseViewModel" />
     </data>
 
     <FrameLayout

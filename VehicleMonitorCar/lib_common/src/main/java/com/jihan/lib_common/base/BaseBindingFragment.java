@@ -1,6 +1,4 @@
-package com.jihan.lib_common.base.base;
-
-import static com.jihan.lib_common.base.utils.LogUtils.TAG_VEHICLE;
+package com.jihan.lib_common.base;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,11 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
-import com.jihan.lib_common.base.utils.LogUtils;
+import com.jihan.lib_common.utils.LogUtils;
 
 public abstract class BaseBindingFragment<V extends ViewDataBinding> extends BaseFragment {
 
-    private static final String TAG = TAG_VEHICLE + BaseBindingFragment.class.getSimpleName();
+    private static final String TAG = LogUtils.TAG_VEHICLE + BaseBindingFragment.class.getSimpleName();
 
     protected V mBinding;
 

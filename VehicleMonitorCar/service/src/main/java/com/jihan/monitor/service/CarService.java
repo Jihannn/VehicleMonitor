@@ -12,9 +12,9 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
-import com.jihan.lib_common.base.model.BaseResponse;
-import com.jihan.lib_common.base.network.ServiceCreator;
-import com.jihan.lib_common.base.utils.LogUtils;
+import com.jihan.lib_common.model.BaseResponse;
+import com.jihan.lib_common.network.ServiceCreator;
+import com.jihan.lib_common.utils.LogUtils;
 import com.jihan.monitor.service.listener.Callback;
 import com.jihan.monitor.service.listener.IgnitionStateListener;
 import com.jihan.monitor.service.listener.SpeedListener;
