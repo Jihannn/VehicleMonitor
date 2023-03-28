@@ -23,3 +23,4 @@ rootProject.name = "VehicleMonitorCar"
 include ':hmi'
 include ':lib_common'
 include ':service'
+include ':sdk'

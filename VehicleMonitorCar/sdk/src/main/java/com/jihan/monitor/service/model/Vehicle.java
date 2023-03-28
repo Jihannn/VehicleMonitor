@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-import com.jihan.monitor.service.utils.ParcelUtils;
+import com.jihan.monitor.sdk.utils.ParcelUtils;
 
 public class Vehicle implements Parcelable {
 
@@ -111,7 +111,7 @@ public class Vehicle implements Parcelable {
                 '}';
     }
 
-    public static final Parcelable.Creator<Vehicle> CREATOR = new Parcelable.Creator<Vehicle>() {
+    public static final Creator<Vehicle> CREATOR = new Creator<Vehicle>() {
         public Vehicle createFromParcel(Parcel in) {
             return new Vehicle(in);
         }

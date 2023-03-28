@@ -9,12 +9,15 @@ import android.car.hardware.CarSensorManager;
 import android.car.hardware.property.CarPropertyManager;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.RemoteException;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleService;
 
 import com.jihan.lib_common.model.BaseResponse;
 import com.jihan.lib_common.network.ServiceCreator;
 import com.jihan.lib_common.utils.LogUtils;
+import com.jihan.monitor.service.binder.VehicleBinder;
 import com.jihan.monitor.service.listener.Callback;
 import com.jihan.monitor.service.listener.IgnitionStateListener;
 import com.jihan.monitor.service.listener.SpeedListener;
@@ -27,7 +30,7 @@ import java.util.TimerTask;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class CarService extends Service {
+public class CarService extends LifecycleService {
 
     private static final String TAG = TAG_SERVICE + CarService.class.getSimpleName();
 
@@ -37,11 +40,13 @@ public class CarService extends Service {
     private CarPropertyManager mCarPropertyManager;
     private CarSensorManager mCarSensorManager;
     private CarListenerStrategy mCarListenerStrategy;
+    private VehicleBinder mVehicleBinder;
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        super.onBind(intent);
+        return mVehicleBinder;
     }
 
     @Override
@@ -49,9 +54,10 @@ public class CarService extends Service {
         super.onCreate();
         LogUtils.logI(TAG,"onCreate");
         mCar = MyCar.getInstance();
+        mVehicleBinder = new VehicleBinder();
         initCarApi();
         initCarManager();
-        // initListener();
+        initListener();
         getStaticStates();
         initUpload();
     }
@@ -79,6 +85,11 @@ public class CarService extends Service {
                     @Override
                     public void onChange(float speed) {
                         mCar.setSpeed(speed);
+                        try {
+                            mVehicleBinder.getCallback().onSpeedChanged(speed);
+                        } catch (RemoteException e) {
+                            LogUtils.logE(TAG,"[initListener]:onSpeedChanged" + e.getMessage());
+                        }
                     }
                 }),CarSensorManager.SENSOR_TYPE_CAR_SPEED,CarSensorManager.SENSOR_RATE_NORMAL);
             }

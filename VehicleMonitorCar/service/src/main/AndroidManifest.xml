@@ -31,7 +31,8 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".service.CarService"/>
+        <service android:name=".service.CarService"
+            android:exported="true"/>
     </application>
 
 </manifest>
