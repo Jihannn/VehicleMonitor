@@ -29,4 +29,12 @@ public class ParcelUtils {
             dest.writeFloat(value);
         }
     }
+
+    public static void writeDouble(Parcel dest, Double value) {
+        if (value == null) {
+            dest.writeDouble(INT_NULL_VALUE);
+        } else {
+            dest.writeDouble(value);
+        }
+    }
 }

@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ServiceCreator {
-    private const val BASE_URL = "http://10.0.2.2:8080/VehicleServer_war/"
+    private const val BASE_URL = "http://10.0.2.2:8080/VehicleServer/"
 
     val cookieJar: PersistentCookieJar by lazy {
         PersistentCookieJar(

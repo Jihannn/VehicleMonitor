@@ -23,7 +23,6 @@ public abstract class BaseConnectManager<T extends IInterface> {
 
     private final String TAG = SdkLogUtils.TAG_SDK + getClass().getSimpleName();
     private static final String THREAD_NAME = "bindServiceThread";
-
     private final Application mApplication;
     private IServiceConnectListener mServiceListener;
     private final Handler mChildThread;

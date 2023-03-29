@@ -1,27 +1,60 @@
 package com.jihan.monitor.service.listener;
 
+import static com.jihan.monitor.service.ServiceApp.TAG_SERVICE;
+
+import android.car.hardware.CarPropertyValue;
 import android.car.hardware.CarSensorEvent;
 import android.car.hardware.CarSensorManager;
+import android.car.hardware.property.CarPropertyManager;
+import android.os.RemoteException;
 
-public class SpeedListener implements CarSensorManager.OnSensorChangedListener{
+import com.jihan.lib_common.utils.LogUtils;
+import com.jihan.monitor.service.MyCar;
 
+public class SpeedListener implements CarPropertyManager.CarPropertyEventCallback{
+
+    private static final String TAG = TAG_SERVICE + SpeedListener.class.getSimpleName();
     private SpeedChangeCallback mCallback;
+    private int mSpeedChangeTimes;
+
+    @Override
+    public void onChangeEvent(CarPropertyValue carPropertyValue) {
+        Float value = (Float) carPropertyValue.getValue();
+        LogUtils.logI(TAG,"[onChangeEvent]:value"+value);
+        try {
+            mCallback.onChange(value);
+        } catch (RemoteException e) {
+            LogUtils.logI(TAG,"[onChangeEvent]:ERROR"+value);
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void onErrorEvent(int propId, int zone) {
+        LogUtils.logI(TAG,"[onErrorEvent]"+propId+":"+zone);
+    }
 
     public interface SpeedChangeCallback{
-        void onChange(float speed);
+        void onChange(float speed) throws RemoteException;
     }
 
     public SpeedListener(SpeedChangeCallback callback){
         this.mCallback = callback;
+        this.mSpeedChangeTimes = 0;
     }
 
-    @Override
-    public void onSensorChanged(CarSensorEvent carSensorEvent) {
-        if(carSensorEvent.sensorType == CarSensorManager.SENSOR_TYPE_CAR_SPEED){
-            CarSensorEvent.CarSpeedData carSpeedData = null;
-            carSpeedData = carSensorEvent.getCarSpeedData(carSpeedData);
-            mCallback.onChange(carSpeedData.carSpeed);
+    public void onSimulationChanged(float speed){
+        LogUtils.logI(TAG,"[onSimulationChanged]:speed"+speed);
+        mSpeedChangeTimes++;
+        if(mSpeedChangeTimes == 60){
+            mSpeedChangeTimes = 0;
+            MyCar.getInstance().setFuelLevel(MyCar.getInstance().getFuelLevel() - 1f);
+        }
+        try {
+            mCallback.onChange(speed);
+        } catch (RemoteException e) {
+            LogUtils.logI(TAG,"[onSimulationChanged]:ERROR"+speed);
+            throw new RuntimeException(e);
         }
     }
-
 }

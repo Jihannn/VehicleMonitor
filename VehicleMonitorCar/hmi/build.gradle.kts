@@ -15,9 +15,9 @@ android {
         versionCode = BuildConfig.versionCode
         versionName = BuildConfig.versionName
 
-        ndk {
-            abiFilters.addAll(arrayListOf("x86_64", "armeabi-v7a", "arm64-v8a"))
-        }
+//        ndk {
+//            abiFilters.addAll(arrayListOf("x86_64", "armeabi-v7a", "arm64-v8a"))
+//        }
     }
 
     buildTypes {

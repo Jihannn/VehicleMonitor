@@ -18,6 +18,10 @@ public class Vehicle implements Parcelable {
     private Float speed;
     private String updateTime;
 
+    private Double longitude;
+
+    private Double latitude;
+
     public Vehicle(){
 
     }
@@ -97,6 +101,22 @@ public class Vehicle implements Parcelable {
         this.updateTime = updateTime;
     }
 
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
     @Override
     public String toString() {
         return "Vehicle{" +
@@ -108,6 +128,8 @@ public class Vehicle implements Parcelable {
                 ", ignitionState=" + ignitionState +
                 ", speed=" + speed +
                 ", updateTime='" + updateTime + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
                 '}';
     }
 
@@ -137,6 +159,8 @@ public class Vehicle implements Parcelable {
         ParcelUtils.writeInteger(dest,ignitionState);
         ParcelUtils.writeFloat(dest,speed);
         ParcelUtils.writeString(dest,updateTime);
+        ParcelUtils.writeDouble(dest,longitude);
+        ParcelUtils.writeDouble(dest,latitude);
     }
 
     public void readFromParcel(Parcel in){
@@ -148,6 +172,8 @@ public class Vehicle implements Parcelable {
         ignitionState = in.readInt();
         speed = in.readFloat();
         updateTime = in.readString();
+        longitude = in.readDouble();
+        latitude = in.readDouble();
     }
 
     public void update(Vehicle vehicle){
@@ -159,5 +185,7 @@ public class Vehicle implements Parcelable {
         ignitionState = vehicle.ignitionState;
         speed = vehicle.speed;
         updateTime = vehicle.updateTime;
+        longitude = vehicle.longitude;
+        latitude = vehicle.latitude;
     }
 }
