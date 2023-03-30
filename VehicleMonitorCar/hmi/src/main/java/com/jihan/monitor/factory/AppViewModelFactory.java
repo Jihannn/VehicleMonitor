@@ -7,7 +7,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.jihan.lib_common.utils.AppExecutors;
 import com.jihan.monitor.model.HvacRepository;
+import com.jihan.monitor.model.LoginRepository;
+import com.jihan.monitor.model.VehicleRepository;
 import com.jihan.monitor.ui.HvacViewModel;
+import com.jihan.monitor.ui.LoginViewModel;
+import com.jihan.monitor.ui.MainViewModel;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -22,6 +26,12 @@ class AppViewModelFactory implements ViewModelProvider.Factory {
             if (modelClass == HvacViewModel.class) {
                 return modelClass.getConstructor(HvacRepository.class, AppExecutors.class)
                         .newInstance(AppInjection.getHvacRepository(), AppExecutors.get());
+            } else if (modelClass == MainViewModel.class) {
+                return modelClass.getConstructor(VehicleRepository.class, AppExecutors.class)
+                        .newInstance(AppInjection.getVehicleRepository(), AppExecutors.get());
+            }else if (modelClass == LoginViewModel.class) {
+                return modelClass.getConstructor(LoginRepository.class)
+                        .newInstance(AppInjection.getLoginRepository());
             } else {
                 throw new RuntimeException(modelClass.getSimpleName() + "create failed");
             }

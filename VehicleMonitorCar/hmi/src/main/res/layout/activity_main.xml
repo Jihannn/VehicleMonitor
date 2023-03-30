@@ -1,68 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.jihan.monitor.ui.MainViewModel" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.MainActivity">
+        android:background="@drawable/bg_2"
+        android:gravity="center"
+        tools:context=".ui.MainActivity2">
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="获取数据"
-            android:textSize="40sp"
-            />
+            android:layout_width="250dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_btn"
+            android:text="@string/get_data"
+            android:textColor="#2cb2e2"
+            android:textSize="40sp" />
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical"
             android:padding="10dp"
-            android:layout_margin="10dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="0dp"
             android:textSize="30sp">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="100dp"
+                android:layout_weight="6">
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="车速：100km/s"
-                android:textSize="30sp"/>
+                android:text="@{@string/speed+String.valueOf(viewModel.vehicleLiveData.speed + @string/km_h)}"
+                android:textColor="#cff0f9"
+                android:textSize="30sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="车型：Speedy Model"
-                android:textSize="30sp"/>
+                android:text="@{@string/model+viewModel.vehicleLiveData.model}"
+                android:textColor="#cff0f9"
+                android:textSize="30sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="生产年份：2020"
-                android:textSize="30sp"/>
+                android:text="@{@string/modelYear+viewModel.vehicleLiveData.modelYear}"
+                android:textColor="#cff0f9"
+                android:textSize="30sp" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="制造商：Toy Vehicle"
-                android:textSize="30sp"/>
+                android:text="@{@string/manufacturer+viewModel.vehicleLiveData.manufacturer}"
+                android:textColor="#cff0f9"
+                android:textSize="30sp" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="总油量：15000"
-                android:textSize="30sp"/>
+                android:text="@{@string/fuelCapacity+viewModel.vehicleLiveData.fuelCapacity+@string/ml}"
+                android:textColor="#cff0f9"
+                android:textSize="30sp" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="当前油量：14998"
-                android:textSize="30sp"/>
+                android:text="@{@string/fuelLevel+viewModel.vehicleLiveData.fuelLevel+@string/ml}"
+                android:textColor="#cff0f9"
+                android:textSize="30sp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_logout"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:textSize="30sp"
+                android:layout_weight="1"
+                android:textColor="#2cb2e2"
+                android:background="@drawable/bg_btn"
+                android:text="@string/logout" />
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.appcompat.widget.AppCompatButton
-            android:text="一键报警"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="40sp"/>
+            android:id="@+id/btn_warning"
+            android:layout_width="250dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_btn"
+            android:text="@string/warning"
+            android:textColor="#2cb2e2"
+            android:textSize="40sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

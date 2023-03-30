@@ -33,7 +33,20 @@ public class VehicleBinder extends IVehicleInterface.Stub {
 
     @Override
     public void getVehicleStatus(Vehicle vehicle) throws RemoteException {
+        LogUtils.logI(TAG,"[getVehicleStatus]Client-Vehicle:"+vehicle.getModel());
+        LogUtils.logI(TAG,"[getVehicleStatus]ServerLocal-Vehicle:"+MyCar.getInstance().getModel());
         vehicle.update(MyCar.getInstance());
+        LogUtils.logI(TAG,"[getVehicleStatus]Changed-Vehicle:"+vehicle.getModel());
+    }
+
+    @Override
+    public int login(String username, String password) throws RemoteException {
+        return 200;
+    }
+
+    @Override
+    public int warning() throws RemoteException {
+        return -1;
     }
 
     @Override

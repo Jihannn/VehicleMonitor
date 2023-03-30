@@ -38,4 +38,5 @@ dependencies {
     api(Others.retrofit)
     api(Others.retrofitGsonConverter)
     api(Others.retrofitPersistentCookie)
+    api(Others.material)
 }

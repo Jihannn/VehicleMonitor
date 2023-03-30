@@ -14,7 +14,7 @@ import com.jihan.monitor.model.HvacRepository;
 
 public class HvacViewModel extends BaseViewModel<HvacRepository> {
 
-    private static final String TAG = CarApp.TAG_HVAC + HvacViewModel.class.getSimpleName();
+    private static final String TAG = CarApp.TAG_HMI + HvacViewModel.class.getSimpleName();
 
     private final HvacRepository mRepository;
     // 线程池框架。某些场景，ViewModel访问Repository中的方法可能会需要切换到子线程。
@@ -47,14 +47,16 @@ public class HvacViewModel extends BaseViewModel<HvacRepository> {
      * 请求页面数据
      */
     public void requestTemperature() {
-        mRepository.requestTemperature();
+        // mRepository.requestTemperature();
+        getTempLive().postValue("12313");
     }
 
     /**
      * 将温度数据设定到Service中
      */
     public void setTemperature(View view) {
-        mRepository.setTemperature(getTempLive().getValue());
+        mRepository.setTemperature("123");
+        getTempLive().postValue("12313");
     }
 
     public MutableLiveData<String> getTempLive() {

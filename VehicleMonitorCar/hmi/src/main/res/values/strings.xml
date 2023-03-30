@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">VehicleMonitor</string>
+    <string name="get_data">获取数据</string>
+    <string name="warning">一键报警</string>
+    <string name="speed">车速：</string>
+    <string name="km_h">km/h</string>
+    <string name="model">车型：</string>
+    <string name="modelYear">生产年份：</string>
+    <string name="manufacturer">制造商：</string>
+    <string name="fuelCapacity">总油量：</string>
+    <string name="fuelLevel">当前油量：</string>
+    <string name="ml">ml</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+    <string name="logout">注销</string>
 </resources>

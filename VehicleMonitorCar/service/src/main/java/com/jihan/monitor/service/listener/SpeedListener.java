@@ -48,7 +48,7 @@ public class SpeedListener implements CarPropertyManager.CarPropertyEventCallbac
         mSpeedChangeTimes++;
         if(mSpeedChangeTimes == 60){
             mSpeedChangeTimes = 0;
-            MyCar.getInstance().setFuelLevel(MyCar.getInstance().getFuelLevel() - 1f);
+            MyCar.getInstance().setFuelLevel(MyCar.getInstance().getFuelLevel() - 5f);
         }
         try {
             mCallback.onChange(speed);

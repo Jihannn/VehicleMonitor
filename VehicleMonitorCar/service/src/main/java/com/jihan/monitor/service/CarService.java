@@ -120,11 +120,11 @@ public class CarService extends LifecycleService {
                 mCarListenerStrategy.registerListener(new SpeedListener(new SpeedListener.SpeedChangeCallback() {
                     @Override
                     public void onChange(float speed) throws RemoteException {
-                        LogUtils.logI(TAG,"[initListener]:onSpeedChanged"+speed);
+                        LogUtils.logI(TAG,"[initListener]:onSpeedChanged"+speed+"fuelLevel:"+mCar.getFuelLevel());
                         mCar.setSpeed(speed);
                         mCar.setUpdateTime(String.valueOf(System.currentTimeMillis()));
                         if(mVehicleBinder.getCallback() != null) {
-                            mVehicleBinder.getCallback().onSpeedChanged(speed);
+                            mVehicleBinder.getCallback().onStatusChanged(speed,mCar.getFuelLevel());
                         }
                     }
                 }),"Speed",VehiclePropertyIds.PERF_VEHICLE_SPEED,VehicleAreaType.VEHICLE_AREA_TYPE_GLOBAL,CarPropertyManager.SENSOR_RATE_FAST);
@@ -180,7 +180,7 @@ public class CarService extends LifecycleService {
         mCar.setModelYear(mCarInfoManager.getModelYearInInteger());
         mCar.setManufacturer(mCarInfoManager.getManufacturer());
         mCar.setFuelCapacity(mCarInfoManager.getFuelCapacity());
-        mCar.setFuelLevel(mCarInfoManager.getFuelCapacity());
+        mCar.setFuelLevel(mCarInfoManager.getFuelCapacity() - (float)(Math.random() * 1000));
         mCar.setUpdateTime(String.valueOf(System.currentTimeMillis()));
     }
 

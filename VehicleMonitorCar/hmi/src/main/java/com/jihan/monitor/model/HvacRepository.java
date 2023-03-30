@@ -10,7 +10,7 @@ import com.jihan.monitor.CarApp;
 
 public class HvacRepository extends BaseRepository {
 
-    private static final String TAG = CarApp.TAG_HVAC + HvacRepository.class.getSimpleName();
+    private static final String TAG = CarApp.TAG_HMI + HvacRepository.class.getSimpleName();
 
     private final HvacManager mHvacManager;
     private HvacCallback mHvacViewModelCallback;
@@ -45,7 +45,8 @@ public class HvacRepository extends BaseRepository {
         if (temperature == null || TextUtils.isEmpty(temperature)) {
             return;
         }
-        mHvacManager.setTemperature(Integer.parseInt(temperature));
+
+        // mHvacManager.setTemperature(Integer.parseInt(temperature));
     }
 
     public void setHvacListener(HvacCallback callback) {

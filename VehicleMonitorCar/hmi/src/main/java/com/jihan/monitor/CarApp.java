@@ -2,9 +2,11 @@ package com.jihan.monitor;
 
 import android.app.Application;
 
-public class CarApp extends Application {
+import com.jihan.lib_common.base.MyApplication;
 
-    public static final String TAG_HVAC = "HVAC_";
+public class CarApp extends MyApplication {
+
+    public static final String TAG_HMI = "VEHICLE_HMI_";
 
     @Override
     public void onCreate() {

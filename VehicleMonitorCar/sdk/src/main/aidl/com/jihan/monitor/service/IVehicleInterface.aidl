@@ -9,4 +9,8 @@ interface IVehicleInterface {
     boolean unregisterCallback(in IVehicleCallback callback);
 
     void getVehicleStatus(inout Vehicle vehicle);
+
+    int login(in String username,in String password);
+
+    int warning();
 }

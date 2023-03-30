@@ -21,4 +21,5 @@ open class MyApplication : Application(), ViewModelStoreOwner {
         appContext = applicationContext
         mAppViewModelStore = ViewModelStore()
     }
+
 }

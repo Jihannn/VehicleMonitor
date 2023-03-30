@@ -59,7 +59,7 @@ public class CarListenerStrategy {
         public void run() {
             while(isRunning.get()){
                 float randomSpeed = (float) (Math.random() * 10);
-                speed += randomSpeed < 6 ? (speed > 6 ? -randomSpeed : 1) : randomSpeed;
+                speed = speed + (randomSpeed < 7 ? (speed > 100 ? -randomSpeed : 5) : randomSpeed);
                 mListener.onSimulationChanged((int)speed);
                 try {
                     Thread.sleep(1000);

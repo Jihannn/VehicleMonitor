@@ -2,6 +2,7 @@ package com.jihan.monitor.ui;
 
 
 import com.jihan.lib_common.base.BaseMvvmActivity;
+import com.jihan.monitor.BR;
 import com.jihan.monitor.R;
 import com.jihan.monitor.databinding.ActivityHvacBinding;
 import com.jihan.monitor.factory.AppInjection;
@@ -25,7 +26,7 @@ public class HvacActivity extends BaseMvvmActivity<HvacViewModel, ActivityHvacBi
 
     @Override
     protected int getViewModelVariable() {
-        return 0;
+        return BR.viewModel2;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.jihan.monitor.sdk;
 
+import static com.jihan.monitor.sdk.Constants.CODE_SERVICE_NOT_CONNECT;
+
 import android.os.IBinder;
 
 import com.jihan.monitor.sdk.base.BaseConnectManager;
@@ -21,11 +23,11 @@ public class VehicleManager extends BaseConnectManager<IVehicleInterface> {
     private final List<VehicleCallback> mCallbacks = new ArrayList<>();
     private final IVehicleCallback.Stub mSpeedCallback = new IVehicleCallback.Stub() {
         @Override
-        public void onSpeedChanged(float speed) {
-            SdkLogUtils.logV(TAG, "[onSpeedChanged] " + speed);
+        public void onStatusChanged(float speed, float fuelLevel) {
+            SdkLogUtils.logV(TAG, "[onSpeedChanged] " + speed + "fuelLevel" + fuelLevel);
             getMainHandler().post(() -> {
                 for (VehicleCallback callback : mCallbacks) {
-                    callback.onSpeedChanged(speed);
+                    callback.onStatusChanged(speed, fuelLevel);
                 }
             });
         }
@@ -97,14 +99,36 @@ public class VehicleManager extends BaseConnectManager<IVehicleInterface> {
         });
     }
 
-    public void getVehicleStatus(Vehicle vehicle){
-        Remote.exec(() ->{
+    public void getVehicleStatus(Vehicle vehicle) {
+        Remote.exec(() -> {
             if (isServiceConnected(true)) {
                 getProxy().getVehicleStatus(vehicle);
-            }else{
-                SdkLogUtils.logV(TAG,"[getVehicleStatus-ERROR]:service is not connect");
+            } else {
+                SdkLogUtils.logV(TAG, "[getVehicleStatus-ERROR]:service is not connect");
             }
             return null;
+        });
+    }
+
+    public int login(String username, String password) {
+        return Remote.exec(() -> {
+            if (isServiceConnected(true)) {
+                return getProxy().login(username, password);
+            } else {
+                SdkLogUtils.logV(TAG, "[getVehicleStatus-ERROR]:service is not connect");
+            }
+            return CODE_SERVICE_NOT_CONNECT;
+        });
+    }
+
+    public int warning() {
+        return Remote.exec(() -> {
+            if (isServiceConnected(true)) {
+                return getProxy().warning();
+            } else {
+                SdkLogUtils.logV(TAG, "[getVehicleStatus-ERROR]:service is not connect");
+            }
+            return CODE_SERVICE_NOT_CONNECT;
         });
     }
 }

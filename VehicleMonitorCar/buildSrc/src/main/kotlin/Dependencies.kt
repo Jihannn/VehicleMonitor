@@ -25,4 +25,5 @@ object Others{
     const val retrofit = "com.squareup.retrofit2:retrofit:2.9.0"
     const val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:2.9.0"
     const val retrofitPersistentCookie = "com.github.franmontiel:PersistentCookieJar:v1.0.1"
+    const val material = "com.google.android.material:material:1.8.0"
 }
