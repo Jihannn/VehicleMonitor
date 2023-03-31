@@ -1,12 +1,14 @@
 package com.jihan.vehicle.server.vehicleserver.servlet;
 
 import com.alibaba.fastjson.JSON;
+import com.jihan.vehicle.server.vehicleserver.Constants;
 import com.jihan.vehicle.server.vehicleserver.entity.Response;
 import com.jihan.vehicle.server.vehicleserver.entity.User;
 import com.jihan.vehicle.server.vehicleserver.service.UserService;
 import com.jihan.vehicle.server.vehicleserver.service.impl.UserServiceImpl;
+import com.jihan.vehicle.server.vehicleserver.utils.JWTUtils;
 import com.jihan.vehicle.server.vehicleserver.utils.PasswordUtils;
-
+import lombok.extern.log4j.Log4j2;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(value = "/login")
+@Log4j2
 public class LoginServlet  extends HttpServlet {
     UserService service;
     @Override
@@ -27,15 +30,20 @@ public class LoginServlet  extends HttpServlet {
         resp.setContentType("text/html;charset=utf-8");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        Response<User> result = new Response<>();
-        if(service.auth(username, PasswordUtils.md5(password),req.getSession())){
-            User user = (User) req.getSession().getAttribute("user");
-            result.setData(service.getUser(user.getId()));
-            result.setErrorCode(0);
-            result.setErrorMsg("");
+        log.info("login:"+username+"pwd:"+password+"md5:"+PasswordUtils.md5(password));
+        Response<String> result = new Response<>();
+        if(service.auth(username, PasswordUtils.md5(password))){
+            String token = JWTUtils.createToken(username);
+            log.info("token:"+token);
+            req.getSession().setAttribute(Constants.TOKEN,token);
+            result.setData(token);
+            result.setErrorCode(Constants.CODE_SUCCESS);
+            result.setErrorMsg("登录成功");
+            log.info("登录成功");
             resp.getWriter().write(JSON.toJSONString(result));
         }else{
-            result.setErrorCode(-1);
+            log.info("登录失败");
+            result.setErrorCode(Constants.CODE_FAILURE);
             result.setErrorMsg("登录失败");
             resp.getWriter().write(JSON.toJSONString(result));
         }

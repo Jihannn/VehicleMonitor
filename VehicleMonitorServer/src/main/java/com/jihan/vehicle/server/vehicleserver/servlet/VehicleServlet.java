@@ -1,11 +1,12 @@
 package com.jihan.vehicle.server.vehicleserver.servlet;
 
 import com.alibaba.fastjson.JSON;
+import com.jihan.vehicle.server.vehicleserver.Constants;
 import com.jihan.vehicle.server.vehicleserver.entity.Response;
 import com.jihan.vehicle.server.vehicleserver.entity.Vehicle;
 import com.jihan.vehicle.server.vehicleserver.service.VehicleService;
 import com.jihan.vehicle.server.vehicleserver.service.impl.VehicleServiceImpl;
-import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @WebServlet("/vehicle")
-@Log
+@Log4j2
 public class VehicleServlet extends HttpServlet {
 
     private VehicleService service;
@@ -55,19 +56,22 @@ public class VehicleServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        log.info("post");
         response.setContentType("application/json;charset=utf-8");
         String requestBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-        log.info("post");
-        log.info(requestBody);
+        String token = request.getHeader("Authorization");
+        log.info("requestBody:"+requestBody);
+        log.info("token:"+token);
         Vehicle vehicle = JSON.parseObject(requestBody, Vehicle.class);
+        log.info("vehicle:"+vehicle);
         Response<Void> result = new Response<>();
         if (vehicle.getPlate_number() == null || vehicle.getBrand() == null || vehicle.getModel() == null) {
-            result.setErrorCode(400);
+            result.setErrorCode(Constants.CODE_FAILURE);
             result.setErrorMsg("车牌号、品牌、车型不能为空");
         } else {
 //            service.insertVehicle(vehicle);
-            result.setErrorCode(200);
-            result.setErrorMsg("Good");
+            result.setErrorCode(Constants.CODE_SUCCESS);
+            result.setErrorMsg("Upload Success");
         }
         String s = JSON.toJSONString(result);
         response.getWriter().write(s);

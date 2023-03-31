@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserService {
 
     User getUser(int id);
-    boolean auth(String username, String password, HttpSession session);
+    boolean auth(String username, String password);
 
     boolean exist(String username);
 

@@ -10,6 +10,7 @@ import com.jihan.lib_common.utils.LogUtils;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CarListenerStrategy {
 
@@ -46,7 +47,7 @@ public class CarListenerStrategy {
 
         private SpeedListener mListener;
 
-        private float speed = 0f;
+        private final AtomicInteger speed = new AtomicInteger(0);
 
         public GenerateSpeedTask(SpeedListener listener){
             this.mListener = listener;
@@ -55,8 +56,8 @@ public class CarListenerStrategy {
         public void run() {
             while(isRunning.get()){
                 float randomSpeed = (float) (Math.random() * 10);
-                speed = speed + (randomSpeed < 7 ? (speed > 100 ? -randomSpeed : 5) : randomSpeed);
-                mListener.onSimulationChanged((int)speed);
+                speed.set((int)(speed.get() + (speed.get() >= 0 && speed.get() < 80 ? randomSpeed : -randomSpeed)));
+                mListener.onSimulationChanged(speed.get());
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {

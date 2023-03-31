@@ -1,5 +1,6 @@
 package com.jihan.vehicle.server.vehicleserver.service.impl;
 
+import com.jihan.vehicle.server.vehicleserver.Constants;
 import com.jihan.vehicle.server.vehicleserver.dao.UserMapper;
 import com.jihan.vehicle.server.vehicleserver.dao.UserVehicleMapper;
 import com.jihan.vehicle.server.vehicleserver.entity.User;
@@ -21,12 +22,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean auth(String username, String password, HttpSession session) {
+    public boolean auth(String username, String password) {
         try (SqlSession sqlSession = MybatisUtil.getSession()){
             UserMapper mapper = sqlSession.getMapper(UserMapper.class);
             User user = mapper.authUser(username, password);
             if(user == null) return false;
-            session.setAttribute("user", user);
             return true;
         }
     }

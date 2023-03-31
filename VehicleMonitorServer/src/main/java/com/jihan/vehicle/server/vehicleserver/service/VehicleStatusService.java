@@ -8,9 +8,11 @@ public interface VehicleStatusService {
 
     void insertVehicleStatus(VehicleStatus vehicleStatus);
 
-    VehicleStatus getVehicleStatusById(Integer id);
+    List<VehicleStatus> findVehicleStatusByDriver(String username);
 
-    List<VehicleStatus> getVehicleStatusByVehicleId(Integer vehicleId);
+    void updateVehicleStatus(VehicleStatus vehicleStatus);
 
+    void deleteVehicle(int id);
 
+    List<VehicleStatus> findAll();
 }
