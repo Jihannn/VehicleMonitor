@@ -1,21 +1,16 @@
 package com.jihan.monitor.service;
 
 import static com.jihan.lib_common.base.MyApplication.appContext;
-import static com.jihan.monitor.service.PrintConfigKt.printProperty;
 import static com.jihan.monitor.service.PrintConfigKt.printSupportConfigList;
 import static com.jihan.monitor.service.ServiceApp.TAG_SERVICE;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.Service;
 import android.car.Car;
 import android.car.CarInfoManager;
 import android.car.VehicleAreaType;
 import android.car.VehiclePropertyIds;
-import android.car.hardware.CarPropertyConfig;
-import android.car.hardware.CarPropertyValue;
-import android.car.hardware.CarSensorManager;
 import android.car.hardware.property.CarPropertyManager;
 import android.content.Context;
 import android.content.Intent;
@@ -32,13 +27,15 @@ import com.jihan.lib_common.utils.LogUtils;
 import com.jihan.monitor.R;
 import com.jihan.monitor.service.binder.VehicleBinder;
 import com.jihan.monitor.service.listener.Callback;
+import com.jihan.monitor.service.listener.CarListenerStrategy;
 import com.jihan.monitor.service.listener.IgnitionStateListener;
 import com.jihan.monitor.service.listener.SpeedListener;
+import com.jihan.monitor.service.model.MyCar;
 import com.jihan.monitor.service.model.Vehicle;
+import com.jihan.monitor.service.model.VehicleRepository;
 import com.jihan.monitor.service.network.UploadService;
 import com.jihan.monitor.service.utils.LocationProvider;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -58,6 +55,7 @@ public class CarService extends LifecycleService {
     private CarPropertyManager mCarPropertyManager;
     private CarListenerStrategy mCarListenerStrategy;
     private VehicleBinder mVehicleBinder;
+    private VehicleRepository mVehicleRepository;
 
     @Nullable
     @Override
@@ -73,6 +71,7 @@ public class CarService extends LifecycleService {
         LogUtils.logI(TAG,"onCreate");
         mCar = MyCar.getInstance();
         mVehicleBinder = new VehicleBinder();
+        mVehicleRepository = VehicleRepository.getInstance();
         initCarApi();
         initCarManager();
         LocationProvider.getInstance().initProvider(appContext);
@@ -114,17 +113,19 @@ public class CarService extends LifecycleService {
     }
 
     private void initListener(){
+        LogUtils.logI(TAG,"[initListener]");
         mCarListenerStrategy.registerListener(new IgnitionStateListener(new Callback() {
             @Override
             public void onSuccess() {
+                LogUtils.logI(TAG,"[initListener-汽车启动]");
                 mCarListenerStrategy.registerListener(new SpeedListener(new SpeedListener.SpeedChangeCallback() {
                     @Override
                     public void onChange(float speed) throws RemoteException {
                         LogUtils.logI(TAG,"[initListener]:onSpeedChanged"+speed+"fuelLevel:"+mCar.getFuelLevel());
                         mCar.setSpeed(speed);
                         mCar.setUpdateTime(String.valueOf(System.currentTimeMillis()));
-                        if(mVehicleBinder.getCallback() != null) {
-                            mVehicleBinder.getCallback().onStatusChanged(speed,mCar.getFuelLevel());
+                        if(mVehicleBinder.getStatusCallback() != null) {
+                            mVehicleBinder.getStatusCallback().onStatusChanged(MyCar.getInstance());
                         }
                     }
                 }),"Speed",VehiclePropertyIds.PERF_VEHICLE_SPEED,VehicleAreaType.VEHICLE_AREA_TYPE_GLOBAL,CarPropertyManager.SENSOR_RATE_FAST);
@@ -139,32 +140,10 @@ public class CarService extends LifecycleService {
 
     private void initUpload() {
         Timer mTimer = new Timer();
-        UploadService uploadService = ServiceCreator.INSTANCE.create(UploadService.class);
         TimerTask mTimerTask = new TimerTask() {
             @Override
             public void run() {
-                Location location = LocationProvider.getInstance().getBestLocation();
-                if(location != null) {
-                    MyCar.getInstance().setLongitude(location.getLongitude());
-                    MyCar.getInstance().setLatitude(location.getLatitude());
-                }
-                Call<BaseResponse<String>> call = uploadService.upload(mCar);
-                call.enqueue(new retrofit2.Callback<BaseResponse<String>>() {
-                    @Override
-                    public void onResponse(Call<BaseResponse<String>> call, Response<BaseResponse<String>> response) {
-                        if (response.body() != null) {
-                            LogUtils.logI(TAG,response.body().getErrorMsg());
-                        }else{
-                            LogUtils.logI(TAG,"response body is null");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<BaseResponse<String>> call, Throwable t) {
-                        LogUtils.logI(TAG,t.toString());
-                    }
-                });
-                LogUtils.logI(TAG,mCar.toString());
+                mVehicleRepository.upload();
             }
         };
         mTimer.schedule(mTimerTask,0,10000);

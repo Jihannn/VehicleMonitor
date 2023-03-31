@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Toast;
 
 
-import androidx.lifecycle.MutableLiveData;
-
 import com.jihan.lib_common.base.BaseMvvmActivity;
 import com.jihan.lib_common.utils.LogUtils;
 import com.jihan.monitor.BR;
@@ -18,7 +16,7 @@ import com.jihan.monitor.databinding.ActivityMainBinding;
 import com.jihan.monitor.factory.AppInjection;
 import com.jihan.monitor.model.UserManager;
 import com.jihan.monitor.sdk.Constants;
-import com.jihan.monitor.sdk.VehicleCallback;
+import com.jihan.monitor.sdk.listener.StatusCallback;
 import com.jihan.monitor.service.model.Vehicle;
 
 public class MainActivity extends BaseMvvmActivity<MainViewModel, ActivityMainBinding> {
@@ -76,17 +74,11 @@ public class MainActivity extends BaseMvvmActivity<MainViewModel, ActivityMainBi
 
     @Override
     protected void initObservable(MainViewModel viewModel) {
-        mViewModel.registerStatusCallback(new VehicleCallback() {
+        mViewModel.requestVehicleData(new StatusCallback() {
             @Override
-            public void onStatusChanged(float speed, float fuelLevel) {
-                LogUtils.logI(TAG,"[initObservable]:"+speed+"fuelLevel:"+fuelLevel);
-                MutableLiveData<Vehicle> vehicleLiveData = mViewModel.getVehicleLiveData();
-                Vehicle vehicle = vehicleLiveData.getValue();
-                if(vehicle != null){
-                    vehicle.setSpeed(speed);
-                    vehicle.setFuelLevel(fuelLevel);
-                    vehicleLiveData.setValue(vehicle);
-                }
+            public void onStatusChanged(Vehicle vehicle) {
+                LogUtils.logI(TAG,"[initObservable-onStatusChanged]:"+vehicle.getSpeed()+"fuelLevel:"+vehicle.getFuelLevel());
+                mViewModel.updateVehicle(vehicle);
             }
         });
     }
@@ -97,6 +89,12 @@ public class MainActivity extends BaseMvvmActivity<MainViewModel, ActivityMainBi
     }
 
     private void refreshData(){
-        mViewModel.requestVehicleData();
+        mViewModel.requestVehicleData(new StatusCallback() {
+            @Override
+            public void onStatusChanged(Vehicle vehicle) {
+                LogUtils.logI(TAG,"[initObservable-onStatusChanged]:"+vehicle.getSpeed()+"fuelLevel:"+vehicle.getFuelLevel());
+                mViewModel.updateVehicle(vehicle);
+            }
+        });
     }
 }

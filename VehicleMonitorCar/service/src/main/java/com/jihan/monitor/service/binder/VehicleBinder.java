@@ -2,51 +2,47 @@ package com.jihan.monitor.service.binder;
 
 import android.os.Parcel;
 import android.os.RemoteException;
+import android.text.TextUtils;
 
 import com.jihan.lib_common.utils.LogUtils;
-import com.jihan.monitor.service.IVehicleCallback;
+import com.jihan.monitor.service.ILoginCallback;
+import com.jihan.monitor.service.IStatusCallback;
+import com.jihan.monitor.service.model.Constants;
 import com.jihan.monitor.service.IVehicleInterface;
-import com.jihan.monitor.service.MyCar;
+import com.jihan.monitor.service.model.MyCar;
 import com.jihan.monitor.service.model.Vehicle;
+import com.jihan.monitor.service.model.VehicleRepository;
 
 public class VehicleBinder extends IVehicleInterface.Stub {
 
     public static final String TAG = VehicleBinder.class.getSimpleName();
 
-    private IVehicleCallback mCallback;
+    private IStatusCallback mStatusCallback;
 
-    public IVehicleCallback getCallback(){
-        return mCallback;
+    public IStatusCallback getStatusCallback(){
+        return mStatusCallback;
     }
 
     @Override
-    public boolean registerCallback(IVehicleCallback callback) throws RemoteException {
-        mCallback = callback;
+    public boolean getVehicleStatus(IStatusCallback callback) throws RemoteException {
+        LogUtils.logI(TAG, "[getVehicleStatus]Server-Vehicle:" + MyCar.getInstance().getModel());
+        mStatusCallback = callback;
         return true;
     }
 
     @Override
-    public boolean unregisterCallback(IVehicleCallback callback) throws RemoteException {
-        mCallback = null;
+    public boolean login(String username, String password, ILoginCallback callback) throws RemoteException {
+        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+            return false;
+        }
+        VehicleRepository.getInstance().login(username,password,callback);
         return true;
     }
 
-    @Override
-    public void getVehicleStatus(Vehicle vehicle) throws RemoteException {
-        LogUtils.logI(TAG,"[getVehicleStatus]Client-Vehicle:"+vehicle.getModel());
-        LogUtils.logI(TAG,"[getVehicleStatus]ServerLocal-Vehicle:"+MyCar.getInstance().getModel());
-        vehicle.update(MyCar.getInstance());
-        LogUtils.logI(TAG,"[getVehicleStatus]Changed-Vehicle:"+vehicle.getModel());
-    }
-
-    @Override
-    public int login(String username, String password) throws RemoteException {
-        return 200;
-    }
 
     @Override
     public int warning() throws RemoteException {
-        return -1;
+        return VehicleRepository.getInstance().warning();
     }
 
     @Override
@@ -54,7 +50,7 @@ public class VehicleBinder extends IVehicleInterface.Stub {
         try {
             return super.onTransact(code, data, reply, flags);
         } catch (RemoteException e) {
-            LogUtils.logI(TAG,"[onTransact-ERROR]");
+            LogUtils.logI(TAG, "[onTransact-ERROR]");
             throw new RuntimeException(e);
         }
     }

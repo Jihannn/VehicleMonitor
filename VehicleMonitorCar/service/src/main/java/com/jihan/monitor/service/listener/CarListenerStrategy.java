@@ -1,15 +1,11 @@
-package com.jihan.monitor.service;
+package com.jihan.monitor.service.listener;
 
 import static com.jihan.monitor.service.ServiceApp.TAG_SERVICE;
 
-import android.car.VehicleAreaType;
 import android.car.VehiclePropertyIds;
-import android.car.hardware.CarPropertyValue;
-import android.car.hardware.CarSensorManager;
 import android.car.hardware.property.CarPropertyManager;
 
 import com.jihan.lib_common.utils.LogUtils;
-import com.jihan.monitor.service.listener.SpeedListener;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

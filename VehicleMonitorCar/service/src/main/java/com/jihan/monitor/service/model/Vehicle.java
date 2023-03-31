@@ -17,9 +17,7 @@ public class Vehicle implements Parcelable {
     private Integer ignitionState;
     private Float speed;
     private String updateTime;
-
     private Double longitude;
-
     private Double latitude;
 
     public Vehicle(){

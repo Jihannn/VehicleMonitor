@@ -75,8 +75,9 @@ public class LoginActivity extends BaseMvvmActivity<LoginViewModel, ActivityLogi
                 }else if(result == Constants.CODE_SUCCESS){
                     Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
                     MainActivity.Launcher.newInstance(LoginActivity.this);
-                    UserManager.saveUser(mBinding.editName.getText().toString());
                     finish();
+                }else if(result == Constants.CODE_LOGIN_FAILURE){
+                    Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_LONG).show();
                 }
             }
         });

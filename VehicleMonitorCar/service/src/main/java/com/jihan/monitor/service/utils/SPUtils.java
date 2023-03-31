@@ -14,6 +14,7 @@ import java.util.Map;
 public class SPUtils {
     //保存在手机里面的文件名
     public static final String FILE_NAME = "cache";
+    public static final String KEY_TOKEN = "token";
     public static SharedPreferences sp ;
 
     private static SharedPreferences init(Context context) {

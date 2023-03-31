@@ -1,4 +1,4 @@
-package com.jihan.monitor.service;
+package com.jihan.monitor.service.model;
 
 import com.jihan.monitor.service.model.Vehicle;
 

@@ -3,11 +3,15 @@ package com.jihan.monitor.sdk;
 import static com.jihan.monitor.sdk.Constants.CODE_SERVICE_NOT_CONNECT;
 
 import android.os.IBinder;
+import android.os.RemoteException;
 
 import com.jihan.monitor.sdk.base.BaseConnectManager;
+import com.jihan.monitor.sdk.listener.LoginCallback;
+import com.jihan.monitor.sdk.listener.StatusCallback;
 import com.jihan.monitor.sdk.utils.Remote;
 import com.jihan.monitor.sdk.utils.SdkLogUtils;
-import com.jihan.monitor.service.IVehicleCallback;
+import com.jihan.monitor.service.ILoginCallback;
+import com.jihan.monitor.service.IStatusCallback;
 import com.jihan.monitor.service.IVehicleInterface;
 import com.jihan.monitor.service.model.Vehicle;
 
@@ -20,14 +24,27 @@ public class VehicleManager extends BaseConnectManager<IVehicleInterface> {
     public static final String SERVICE_PACKAGE = "com.jihan.monitor.service";
     public static final String SERVICE_CLASSNAME = "com.jihan.monitor.service.CarService";
     private static final long RETRY_TIME = 5000L;
-    private final List<VehicleCallback> mCallbacks = new ArrayList<>();
-    private final IVehicleCallback.Stub mSpeedCallback = new IVehicleCallback.Stub() {
+    private final List<StatusCallback> mStatusCallbacks = new ArrayList<>();
+    private final List<LoginCallback> mLoginCallbacks = new ArrayList<>();
+    private final IStatusCallback.Stub mStatusCallback = new IStatusCallback.Stub() {
         @Override
-        public void onStatusChanged(float speed, float fuelLevel) {
-            SdkLogUtils.logV(TAG, "[onSpeedChanged] " + speed + "fuelLevel" + fuelLevel);
+        public void onStatusChanged(Vehicle vehicle) {
+            SdkLogUtils.logV(TAG, "[onStatusChanged] " + vehicle.getSpeed()+"fuelLevel:"+vehicle.getFuelLevel());
             getMainHandler().post(() -> {
-                for (VehicleCallback callback : mCallbacks) {
-                    callback.onStatusChanged(speed, fuelLevel);
+                for (StatusCallback callback : mStatusCallbacks) {
+                    callback.onStatusChanged(vehicle);
+                }
+            });
+        }
+    };
+
+    private final ILoginCallback.Stub mLoginCallback = new ILoginCallback.Stub() {
+        @Override
+        public void onResponse(String token) throws RemoteException {
+            SdkLogUtils.logV(TAG, "[onResponse] " + token);
+            getMainHandler().post(() -> {
+                for (LoginCallback callback : mLoginCallbacks) {
+                    callback.onResponse(token);
                 }
             });
         }
@@ -64,60 +81,35 @@ public class VehicleManager extends BaseConnectManager<IVehicleInterface> {
         return RETRY_TIME;
     }
 
-    public boolean registerCallback(VehicleCallback callback) {
-        return Remote.exec(() -> {
-            if (isServiceConnected(true)) {
-                boolean result = getProxy().registerCallback(mSpeedCallback);
-                if (result) {
-                    mCallbacks.remove(callback);
-                    mCallbacks.add(callback);
-                }
-                return result;
-            } else {
-                getTaskQueue().offer(() -> {
-                    registerCallback(callback);
-                });
-                return false;
-            }
-        });
-    }
-
-    public boolean unregisterCallback(VehicleCallback callback) {
-        return Remote.exec(() -> {
-            if (isServiceConnected(true)) {
-                boolean result = getProxy().unregisterCallback(mSpeedCallback);
-                if (result) {
-                    mCallbacks.remove(callback);
-                }
-                return result;
-            } else {
-                getTaskQueue().offer(() -> {
-                    unregisterCallback(callback);
-                });
-                return false;
-            }
-        });
-    }
-
-    public void getVehicleStatus(Vehicle vehicle) {
+    public void getVehicleStatus(StatusCallback callback) {
         Remote.exec(() -> {
             if (isServiceConnected(true)) {
-                getProxy().getVehicleStatus(vehicle);
+                mStatusCallbacks.add(callback);
+                boolean result = getProxy().getVehicleStatus(mStatusCallback);
+                if(!result){
+                    mStatusCallbacks.remove(callback);
+                }
+                SdkLogUtils.logV(TAG, "[getVehicleStatus]:"+result);
             } else {
                 SdkLogUtils.logV(TAG, "[getVehicleStatus-ERROR]:service is not connect");
             }
-            return null;
+            return true;
         });
     }
 
-    public int login(String username, String password) {
-        return Remote.exec(() -> {
+    public void login(String username, String password, LoginCallback callback) {
+        Remote.exec(() -> {
             if (isServiceConnected(true)) {
-                return getProxy().login(username, password);
+                mLoginCallbacks.add(callback);
+                boolean result = getProxy().login(username, password,mLoginCallback);
+                if(!result){
+                    mLoginCallbacks.remove(callback);
+                }
             } else {
                 SdkLogUtils.logV(TAG, "[getVehicleStatus-ERROR]:service is not connect");
             }
-            return CODE_SERVICE_NOT_CONNECT;
+            callback.onResponse(null);
+            return true;
         });
     }
 

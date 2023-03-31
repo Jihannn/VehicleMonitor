@@ -3,13 +3,10 @@ package com.jihan.monitor.service.listener;
 import static com.jihan.monitor.service.ServiceApp.TAG_SERVICE;
 
 import android.car.hardware.CarPropertyValue;
-import android.car.hardware.CarSensorEvent;
-import android.car.hardware.CarSensorManager;
 import android.car.hardware.property.CarPropertyManager;
 
 import com.jihan.lib_common.utils.LogUtils;
-import com.jihan.monitor.service.CarService;
-import com.jihan.monitor.service.MyCar;
+import com.jihan.monitor.service.model.MyCar;
 
 public class IgnitionStateListener implements CarPropertyManager.CarPropertyEventCallback {
 

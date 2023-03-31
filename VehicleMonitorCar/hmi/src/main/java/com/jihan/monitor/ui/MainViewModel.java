@@ -6,7 +6,7 @@ import com.jihan.lib_common.utils.AppExecutors;
 import com.jihan.lib_common.viewmodel.BaseViewModel;
 import com.jihan.monitor.CarApp;
 import com.jihan.monitor.model.VehicleRepository;
-import com.jihan.monitor.sdk.VehicleCallback;
+import com.jihan.monitor.sdk.listener.StatusCallback;
 import com.jihan.monitor.service.model.Vehicle;
 
 public class MainViewModel extends BaseViewModel<VehicleRepository> {
@@ -22,12 +22,15 @@ public class MainViewModel extends BaseViewModel<VehicleRepository> {
         this.mAppExecutors = executors;
     }
 
-    public void requestVehicleData(){
+    public void requestVehicleData(StatusCallback callback){
         if(getVehicleLiveData().getValue() == null){
             mVehicleData.setValue(new Vehicle());
         }
-        mRepository.requestVehicleData(mVehicleData.getValue());
-        mVehicleData.setValue(mVehicleData.getValue());
+        mRepository.requestVehicleData(callback);
+    }
+
+    public void updateVehicle(Vehicle vehicle){
+        mVehicleData.setValue(vehicle);
     }
 
     public MutableLiveData<Vehicle> getVehicleLiveData(){
@@ -35,10 +38,6 @@ public class MainViewModel extends BaseViewModel<VehicleRepository> {
             mVehicleData = new MutableLiveData<>();
         }
         return mVehicleData;
-    }
-
-    public void registerStatusCallback(VehicleCallback callback){
-        mRepository.registerCallback(callback);
     }
 
     public int warning(){

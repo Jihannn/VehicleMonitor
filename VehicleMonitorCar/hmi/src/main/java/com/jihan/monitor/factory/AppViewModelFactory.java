@@ -30,8 +30,8 @@ class AppViewModelFactory implements ViewModelProvider.Factory {
                 return modelClass.getConstructor(VehicleRepository.class, AppExecutors.class)
                         .newInstance(AppInjection.getVehicleRepository(), AppExecutors.get());
             }else if (modelClass == LoginViewModel.class) {
-                return modelClass.getConstructor(LoginRepository.class)
-                        .newInstance(AppInjection.getLoginRepository());
+                return modelClass.getConstructor(LoginRepository.class, AppExecutors.class)
+                        .newInstance(AppInjection.getLoginRepository(), AppExecutors.get());
             } else {
                 throw new RuntimeException(modelClass.getSimpleName() + "create failed");
             }
