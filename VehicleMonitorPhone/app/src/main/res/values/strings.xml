@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">VehicleMonitorPhone</string>
+    <string name="app_name">汽车监控移动端</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="go_register">没有账号?这里注册</string>
+    <string name="register_success">注册成功</string>
+    <string name="password_sure">确认密码</string>
 </resources>
