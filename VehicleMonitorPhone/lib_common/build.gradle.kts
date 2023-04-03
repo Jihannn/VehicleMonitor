@@ -32,9 +32,10 @@ dependencies {
     api(AndroidX.fragment)
     api(AndroidX.lifecycleLiveData)
     api(AndroidX.lifecycleViewModel)
-    api(AndroidX.constraintlayout)
-    api(AndroidX.material)
+    api(AndroidX.swiperefreshlayout)
     api(Others.retrofit)
     api(Others.retrofitGsonConverter)
     api(Others.retrofitPersistentCookie)
+    api(Others.material)
+    api(Others.recyclerViewHelper)
 }

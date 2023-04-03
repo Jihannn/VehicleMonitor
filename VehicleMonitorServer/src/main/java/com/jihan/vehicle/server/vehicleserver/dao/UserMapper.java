@@ -11,8 +11,8 @@ public interface UserMapper {
     @Select("select * from users where username = #{username} and password = #{password} ")
     User authUser(@Param("username") String username,@Param("password") String password);
 
-    @Select("select * from users where id = #{id}")
-    User getUser(@Param("id") int id);
+    @Select("select * from users where username = #{username}")
+    User getUser(@Param("username") String username);
 
     @Select("select * from users where username = #{username}")
     Integer exist(@Param("username") String username);

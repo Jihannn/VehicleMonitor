@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
-import com.jihan.monitor.phone.network.LoginRepository;
+import com.jihan.monitor.phone.model.UserRepository;
+import com.jihan.monitor.phone.model.VehicleRepository;
 
 
 /**
@@ -27,7 +28,11 @@ public class AppInjection {
      * 受保护的权限,除了ViewModel，其它模块不应该需要Model层的实例
      *
      */
-    protected static LoginRepository getLoginRepository() {
-        return new LoginRepository();
+    protected static UserRepository getLoginRepository() {
+        return new UserRepository();
+    }
+
+    protected static VehicleRepository getVehicleRepository() {
+        return new VehicleRepository();
     }
 }

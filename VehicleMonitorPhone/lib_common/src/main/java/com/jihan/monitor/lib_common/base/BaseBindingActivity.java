@@ -20,7 +20,7 @@ public abstract class BaseBindingActivity<V extends ViewDataBinding> extends Bas
         mBinding = DataBindingUtil.setContentView(this, getLayoutId());
         mBinding.setLifecycleOwner(this);
         mBinding.executePendingBindings();
-        initView();
+        initView(savedInstanceState);
     }
 
     @LayoutRes
@@ -30,5 +30,5 @@ public abstract class BaseBindingActivity<V extends ViewDataBinding> extends Bas
         return mBinding;
     }
 
-    protected abstract void initView();
+    protected abstract void initView(@Nullable Bundle savedInstanceState);
 }

@@ -8,6 +8,7 @@ import com.jihan.vehicle.server.vehicleserver.service.UserService;
 import com.jihan.vehicle.server.vehicleserver.service.impl.UserServiceImpl;
 import com.jihan.vehicle.server.vehicleserver.utils.JWTUtils;
 import com.jihan.vehicle.server.vehicleserver.utils.PasswordUtils;
+import com.sun.org.apache.bcel.internal.Const;
 import lombok.extern.log4j.Log4j2;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,6 +37,7 @@ public class LoginServlet  extends HttpServlet {
             String token = JWTUtils.createToken(username);
             log.info("token:"+token);
             req.getSession().setAttribute(Constants.TOKEN,token);
+            req.getSession().setAttribute(Constants.USER,service.getUser(username));
             result.setData(token);
             result.setErrorCode(Constants.CODE_SUCCESS);
             result.setErrorMsg("登录成功");

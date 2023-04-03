@@ -54,10 +54,14 @@ public class RegisterDialog {
                 mDialogRegisterBinding.Loading.setVisibility(View.VISIBLE);
             }
         });
-        mLoginViewModel.registerLiveData.observe(mLoginActivity, resp -> {
-            if(resp.getErrorCode() == Constants.CODE_SUCCESS){
+        mLoginViewModel.registerLiveData.observe(mLoginActivity, result -> {
+            if(result == Constants.CODE_SUCCESS){
                 mRegisterDialog.dismiss();
                 Toast.makeText(mLoginActivity, mLoginActivity.getString(R.string.register_success), Toast.LENGTH_SHORT).show();;
+                mDialogRegisterBinding.Loading.setVisibility(View.GONE);
+            }else{
+                mRegisterDialog.dismiss();
+                Toast.makeText(mLoginActivity, mLoginActivity.getString(R.string.register_failure), Toast.LENGTH_SHORT).show();;
                 mDialogRegisterBinding.Loading.setVisibility(View.GONE);
             }
         });

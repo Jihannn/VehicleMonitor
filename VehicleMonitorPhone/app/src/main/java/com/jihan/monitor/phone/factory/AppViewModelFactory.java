@@ -4,8 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.jihan.monitor.phone.network.LoginRepository;
+import com.jihan.monitor.lib_common.model.BaseRepository;
+import com.jihan.monitor.phone.dapter.VehicleAdapter;
+import com.jihan.monitor.phone.model.UserRepository;
+import com.jihan.monitor.phone.model.VehicleRepository;
+import com.jihan.monitor.phone.ui.CarViewModel;
 import com.jihan.monitor.phone.ui.LoginViewModel;
+import com.jihan.monitor.phone.ui.MainViewModel;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -18,8 +23,15 @@ class AppViewModelFactory implements ViewModelProvider.Factory {
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         try {
             if (modelClass == LoginViewModel.class) {
-                return modelClass.getConstructor(LoginRepository.class)
-                        .newInstance(AppInjection.getLoginRepository());
+                return modelClass.getConstructor(UserRepository.class)
+                        .newInstance(AppInjection.getLoginRepository
+                                ());
+            }else if (modelClass == CarViewModel.class) {
+                return modelClass.getConstructor(VehicleRepository.class)
+                        .newInstance(AppInjection.getVehicleRepository());
+            } else if (modelClass == MainViewModel.class) {
+                return modelClass.getConstructor()
+                        .newInstance();
             } else {
                 throw new RuntimeException(modelClass.getSimpleName() + "create failed");
             }

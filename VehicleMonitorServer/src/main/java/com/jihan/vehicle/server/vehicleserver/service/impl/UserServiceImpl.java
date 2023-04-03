@@ -14,10 +14,10 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
     @Override
-    public User getUser(int id) {
+    public User getUser(String username) {
         try (SqlSession sqlSession = MybatisUtil.getSession()){
             UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-            return mapper.getUser(id);
+            return mapper.getUser(username);
         }
     }
 
@@ -48,10 +48,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Vehicle> getUserVehicles(int id) {
+    public List<Vehicle> findVehiclesByUserId(int userID) {
         try (SqlSession sqlSession = MybatisUtil.getSession()){
             UserVehicleMapper mapper = sqlSession.getMapper(UserVehicleMapper.class);
-            return mapper.findVehiclesByUserId(id);
+            return mapper.findVehiclesByUserId(userID);
         }
     }
 }

@@ -4,12 +4,13 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import com.jihan.monitor.lib_common.base.MyApplication.Companion.appContext
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ServiceCreator {
-    private const val BASE_URL = "https://www.wanandroid.com"
+    private const val BASE_URL = "http://192.168.0.103:8080/VehicleServer/"
 
     val cookieJar: PersistentCookieJar by lazy {
         PersistentCookieJar(
@@ -18,17 +19,27 @@ object ServiceCreator {
         )
     }
 
-    private val client = OkHttpClient.Builder()
-        .cookieJar(cookieJar)
-        .build()
+    fun createCustomClient(interceptor: Interceptor? = null): OkHttpClient {
+        val clientBuilder = OkHttpClient.Builder()
+            .cookieJar(cookieJar)
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .client(client)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+        interceptor?.let {
+            clientBuilder.addInterceptor(it)
+        }
 
-    fun <T> create(serviceClass: Class<T>): T = retrofit.create(serviceClass)
+        return clientBuilder.build()
+    }
 
-    inline fun <reified T> create(): T = create(T::class.java)
+    fun <T> create(serviceClass: Class<T>, interceptor: Interceptor? = null): T {
+        val customClient = createCustomClient(interceptor)
+        val customRetrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(customClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        return customRetrofit.create(serviceClass)
+    }
+
+    inline fun <reified T> create(interceptor: Interceptor? = null): T = create(T::class.java, interceptor)
+
 }
