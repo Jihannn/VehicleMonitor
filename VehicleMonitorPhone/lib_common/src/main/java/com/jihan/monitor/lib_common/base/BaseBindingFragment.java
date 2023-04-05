@@ -1,6 +1,6 @@
 package com.jihan.monitor.lib_common.base;
 
-import static com.jihan.monitor.lib_common.utils.LogUtils.TAG_FWK;
+import static com.jihan.monitor.lib_common.utils.LogUtils.TAG_PHONE;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,7 +18,7 @@ import com.jihan.monitor.lib_common.utils.LogUtils;
 
 public abstract class BaseBindingFragment<V extends ViewDataBinding> extends BaseFragment {
 
-    private static final String TAG = TAG_FWK + BaseBindingFragment.class.getSimpleName();
+    private static final String TAG = TAG_PHONE + BaseBindingFragment.class.getSimpleName();
 
     protected V mBinding;
 

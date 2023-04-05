@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder;
 import com.jihan.monitor.lib_common.utils.LogUtils;
 import com.jihan.monitor.phone.databinding.ItemVehicleBinding;
 import com.jihan.monitor.phone.model.Vehicle;
+import com.jihan.monitor.phone.ui.CarDetailActivity;
 
 public class VehicleAdapter extends BaseQuickAdapter<Vehicle, BaseDataBindingHolder<ItemVehicleBinding>> implements LoadMoreModule{
 
@@ -34,6 +35,7 @@ public class VehicleAdapter extends BaseQuickAdapter<Vehicle, BaseDataBindingHol
             dataBinding.executePendingBindings();
             dataBinding.layoutRelative.setOnClickListener(v -> {
                 LogUtils.logI(TAG,"[jump]:");
+                CarDetailActivity.Launcher.launch(getContext(),vehicle);
             });
         }
     }

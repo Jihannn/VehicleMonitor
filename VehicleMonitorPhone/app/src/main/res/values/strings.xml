@@ -11,6 +11,17 @@
     <string name="menu_car">车辆</string>
     <string name="menu_mine">我的</string>
     <string name="model">车型：</string>
+    <string name="model_year">出厂年份：</string>
     <string name="plate_number">车牌：</string>
     <string name="brand">品牌：</string>
+    <string name="car_status">车况</string>
+    <string name="manufacturer">制造商：</string>
+    <string name="fuelCapacity">总油量：</string>
+    <string name="fuelLevel">当前油量：</string>
+    <string name="ignitionState">当前状态：</string>
+    <string name="ignitionState_start">启动</string>
+    <string name="ignitionState_lock">锁定</string>
+    <string name="speed">车速：</string>
+    <string name="ml">ml</string>
+    <string name="km_h">km/h</string>
 </resources>

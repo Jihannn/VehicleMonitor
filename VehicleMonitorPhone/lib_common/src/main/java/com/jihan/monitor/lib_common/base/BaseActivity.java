@@ -3,7 +3,7 @@ package com.jihan.monitor.lib_common.base;
 
 
 
-import static com.jihan.monitor.lib_common.utils.LogUtils.TAG_FWK;
+import static com.jihan.monitor.lib_common.utils.LogUtils.TAG_PHONE;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import com.jihan.monitor.lib_common.utils.LogUtils;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private final String TAG = TAG_FWK + getClass().getSimpleName();
+    private final String TAG = TAG_PHONE + getClass().getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

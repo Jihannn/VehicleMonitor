@@ -1,5 +1,6 @@
 package com.jihan.vehicle.server.vehicleserver.service.impl;
 
+import com.jihan.vehicle.server.vehicleserver.dao.VehicleMapper;
 import com.jihan.vehicle.server.vehicleserver.dao.VehicleStatusMapper;
 import com.jihan.vehicle.server.vehicleserver.entity.VehicleStatus;
 import com.jihan.vehicle.server.vehicleserver.service.VehicleStatusService;
@@ -40,4 +41,11 @@ public class VehicleStatusServiceImpl implements VehicleStatusService {
         return null;
     }
 
+    @Override
+    public VehicleStatus getLatestVehicleStatus(int vehicle_id) {
+        try (SqlSession sqlSession = MybatisUtil.getSession()){
+            VehicleStatusMapper mapper = sqlSession.getMapper(VehicleStatusMapper.class);
+            return mapper.getLatestVehicleStatus(vehicle_id);
+        }
+    }
 }

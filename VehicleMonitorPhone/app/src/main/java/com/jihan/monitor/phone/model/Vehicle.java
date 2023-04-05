@@ -1,6 +1,13 @@
 package com.jihan.monitor.phone.model;
 
-public class Vehicle {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+import com.jihan.monitor.phone.utils.ParcelUtils;
+
+public class Vehicle implements Parcelable {
     private int id;
     private String plate_number;
     private String brand;
@@ -56,5 +63,41 @@ public class Vehicle {
                 ", model='" + model + '\'' +
                 ", production_year=" + production_year +
                 '}';
+    }
+
+    public Vehicle(Parcel in){
+        readFromParcel(in);
+    }
+
+    public static final Parcelable.Creator<Vehicle> CREATOR = new Parcelable.Creator<Vehicle>() {
+        public Vehicle createFromParcel(Parcel in) {
+            return new Vehicle(in);
+        }
+
+        public Vehicle[] newArray(int size) {
+            return new Vehicle[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        ParcelUtils.writeInteger(dest,id);
+        ParcelUtils.writeString(dest,plate_number);
+        ParcelUtils.writeString(dest,brand);
+        ParcelUtils.writeString(dest,model);
+        ParcelUtils.writeInteger(dest,production_year);
+    }
+
+    public void readFromParcel(Parcel in){
+        id = in.readInt();
+        plate_number =in.readString();
+        brand = in.readString();
+        model = in.readString();
+        production_year = in.readInt();
     }
 }

@@ -82,6 +82,10 @@ public class CarFragment extends BaseMvvmFragment<CarViewModel, FragmentCarBindi
     }
 
     private void handlerVehicleList(BaseResponse<List<Vehicle>> resp){
+        if(resp == null){
+            LogUtils.logI(TAG,"[handlerVehicleList]resp is null");
+            return;
+        }
         LogUtils.logI(TAG,"[handlerVehicleList]"+resp.getData().toString());
         List<Vehicle> vehicleList = resp.getData();
         if(vehicleList != null){

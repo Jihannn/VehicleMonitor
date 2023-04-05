@@ -5,12 +5,15 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.jihan.monitor.lib_common.model.BaseRepository;
+import com.jihan.monitor.lib_common.utils.AppExecutors;
 import com.jihan.monitor.phone.dapter.VehicleAdapter;
 import com.jihan.monitor.phone.model.UserRepository;
 import com.jihan.monitor.phone.model.VehicleRepository;
+import com.jihan.monitor.phone.ui.CarDetailViewModel;
 import com.jihan.monitor.phone.ui.CarViewModel;
 import com.jihan.monitor.phone.ui.LoginViewModel;
 import com.jihan.monitor.phone.ui.MainViewModel;
+import com.jihan.monitor.phone.ui.MineViewModel;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -32,7 +35,13 @@ class AppViewModelFactory implements ViewModelProvider.Factory {
             } else if (modelClass == MainViewModel.class) {
                 return modelClass.getConstructor()
                         .newInstance();
-            } else {
+            }  else if (modelClass == CarDetailViewModel.class) {
+                return modelClass.getConstructor(VehicleRepository.class, AppExecutors.class)
+                        .newInstance(AppInjection.getVehicleRepository(),AppExecutors.get());
+            } else if (modelClass == MineViewModel.class) {
+                return modelClass.getConstructor()
+                        .newInstance();
+            }  else {
                 throw new RuntimeException(modelClass.getSimpleName() + "create failed");
             }
         } catch (NoSuchMethodException | IllegalAccessException

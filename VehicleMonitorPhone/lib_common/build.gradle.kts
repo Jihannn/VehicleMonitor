@@ -38,4 +38,6 @@ dependencies {
     api(Others.retrofitPersistentCookie)
     api(Others.material)
     api(Others.recyclerViewHelper)
+    api(Others.webSocket)
+    api(Others.fastJson)
 }

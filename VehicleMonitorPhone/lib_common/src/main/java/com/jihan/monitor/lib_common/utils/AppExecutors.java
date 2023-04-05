@@ -1,6 +1,6 @@
 package com.jihan.monitor.lib_common.utils;
 
-import static com.jihan.monitor.lib_common.utils.LogUtils.TAG_FWK;
+import static com.jihan.monitor.lib_common.utils.LogUtils.TAG_PHONE;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -17,7 +17,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class AppExecutors {
-    private static final String TAG = TAG_FWK + AppExecutors.class.getSimpleName();
+    private static final String TAG = TAG_PHONE + AppExecutors.class.getSimpleName();
 
     private static final AppExecutors APP_EXECUTORS = new AppExecutors();
     public static final long KEEP_ALIVE = 30L;
@@ -43,7 +43,7 @@ public class AppExecutors {
 
         ThreadFactory factory = runnable -> {
             Thread thread = new Thread(runnable);
-            thread.setName("FWK_TASK#" + seq.getAndIncrement());
+            thread.setName("PHONE_TASK#" + seq.getAndIncrement());
             return thread;
         };
 

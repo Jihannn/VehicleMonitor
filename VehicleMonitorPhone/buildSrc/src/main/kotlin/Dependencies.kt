@@ -21,4 +21,6 @@ object Others{
     const val retrofitPersistentCookie = "com.github.franmontiel:PersistentCookieJar:v1.0.1"
     const val material = "com.google.android.material:material:1.8.0"
     const val recyclerViewHelper = "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7"
+    const val webSocket = "org.java-websocket:Java-WebSocket:1.5.3"
+    const val fastJson = "com.alibaba:fastjson:1.1.46.android"
 }

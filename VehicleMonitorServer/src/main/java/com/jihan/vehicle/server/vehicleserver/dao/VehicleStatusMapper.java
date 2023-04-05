@@ -24,4 +24,7 @@ public interface VehicleStatusMapper {
 
     @Select("SELECT * FROM vehicle_status")
     List<VehicleStatus> findAll();
+
+    @Select("SELECT * FROM vehicle_status WHERE vehicle_id = #{vehicle_id} ORDER BY updateTime DESC LIMIT 1")
+    VehicleStatus getLatestVehicleStatus(int vehicle_id);
 }

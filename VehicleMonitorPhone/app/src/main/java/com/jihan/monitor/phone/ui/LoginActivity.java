@@ -2,6 +2,8 @@ package com.jihan.monitor.phone.ui;
 
 import static com.jihan.monitor.phone.PhoneApplication.TAG_PHONE;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
@@ -24,6 +26,11 @@ public class LoginActivity extends BaseMvvmActivity<LoginViewModel,ActivityLogin
 
     private static final String TAG = TAG_PHONE + LoginActivity.class.getSimpleName();
 
+    public static class LAUNCHER{
+        public static void launch(Context context){
+            context.startActivity(new Intent(context,LoginActivity.class));
+        }
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.activity_login;

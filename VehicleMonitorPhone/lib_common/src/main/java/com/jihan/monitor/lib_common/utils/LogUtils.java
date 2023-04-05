@@ -4,7 +4,7 @@ import android.util.Log;
 
 public class LogUtils {
 
-    public static final String TAG_FWK = "FWK_MVVM_";
+    public static final String TAG_PHONE = "MONITOR_PHONE_";
 
     private static boolean DEBUG = true;
     private static boolean VERBOSE = true;
