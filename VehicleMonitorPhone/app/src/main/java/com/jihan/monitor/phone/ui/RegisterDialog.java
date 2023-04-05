@@ -45,7 +45,7 @@ public class RegisterDialog {
 
     private void init(){
         mDialogRegisterBinding.setDialog(this);
-        mDialogRegisterBinding.loginButton.setOnClickListener(v -> {
+        mDialogRegisterBinding.registerButton.setOnClickListener(v -> {
             String username = userNameObservable.get().trim().toString();
             String password = passwordObservable.get().trim().toString();
             String confirmPassword = confirmPasswordObservable.get().trim().toString();

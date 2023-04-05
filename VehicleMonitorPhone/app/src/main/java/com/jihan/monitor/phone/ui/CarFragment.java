@@ -1,5 +1,6 @@
 package com.jihan.monitor.phone.ui;
 
+import static com.jihan.monitor.lib_common.base.MyApplication.appContext;
 import static com.jihan.monitor.phone.PhoneApplication.TAG_PHONE;
 
 import android.graphics.Color;
@@ -53,6 +54,12 @@ public class CarFragment extends BaseMvvmFragment<CarViewModel, FragmentCarBindi
             mAdapter.getLoadMoreModule().setEnableLoadMore(false);
             mViewModel.getVehicleList();
         });
+        View footer = getLayoutInflater().inflate(R.layout.item_vehicle_footer, null);
+        footer.setOnClickListener(v -> {
+            LogUtils.logI(TAG,"[click-footer]");
+            new RegisterVehicleDialog(CarFragment.this,mViewModel).show();
+        });
+        mAdapter.addFooterView(footer);
         mBinding.includeList.recyclerView.setAdapter(mAdapter);
     }
 
@@ -82,6 +89,8 @@ public class CarFragment extends BaseMvvmFragment<CarViewModel, FragmentCarBindi
     }
 
     private void handlerVehicleList(BaseResponse<List<Vehicle>> resp){
+        mBinding.includeList.layoutRefresh.setRefreshing(false);
+        mBinding.includeList.layoutRefresh.setEnabled(true);
         if(resp == null){
             LogUtils.logI(TAG,"[handlerVehicleList]resp is null");
             return;
@@ -93,8 +102,6 @@ public class CarFragment extends BaseMvvmFragment<CarViewModel, FragmentCarBindi
             BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();
             loadMoreModule.setEnableLoadMore(true);
             loadMoreModule.loadMoreEnd();
-            mBinding.includeList.layoutRefresh.setRefreshing(false);
-            mBinding.includeList.layoutRefresh.setEnabled(true);
         }
     }
 

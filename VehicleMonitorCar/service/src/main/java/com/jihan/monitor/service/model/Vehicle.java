@@ -19,6 +19,8 @@ public class Vehicle implements Parcelable {
     private String updateTime;
     private Double longitude;
     private Double latitude;
+    private String deviceId;
+    private String driver;
 
     public Vehicle(){
 
@@ -28,11 +30,19 @@ public class Vehicle implements Parcelable {
         readFromParcel(in);
     }
 
-    public Vehicle(String model, Integer modelYear, String manufacturer, Float fuelCapacity) {
+    public Vehicle(String model, Integer modelYear, String manufacturer, Float fuelCapacity, Float fuelLevel, Integer ignitionState, Float speed, String updateTime, Double longitude, Double latitude, String deviceId, String driver) {
         this.model = model;
         this.modelYear = modelYear;
         this.manufacturer = manufacturer;
         this.fuelCapacity = fuelCapacity;
+        this.fuelLevel = fuelLevel;
+        this.ignitionState = ignitionState;
+        this.speed = speed;
+        this.updateTime = updateTime;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.deviceId = deviceId;
+        this.driver = driver;
     }
 
     public String getModel() {
@@ -115,6 +125,22 @@ public class Vehicle implements Parcelable {
         this.latitude = latitude;
     }
 
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public String getDriver() {
+        return driver;
+    }
+
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
+
     @Override
     public String toString() {
         return "Vehicle{" +
@@ -128,6 +154,8 @@ public class Vehicle implements Parcelable {
                 ", updateTime='" + updateTime + '\'' +
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
+                ", deviceId='" + deviceId + '\'' +
+                ", driver='" + driver + '\'' +
                 '}';
     }
 
@@ -159,6 +187,8 @@ public class Vehicle implements Parcelable {
         ParcelUtils.writeString(dest,updateTime);
         ParcelUtils.writeDouble(dest,longitude);
         ParcelUtils.writeDouble(dest,latitude);
+        ParcelUtils.writeString(dest,deviceId);
+        ParcelUtils.writeString(dest,driver);
     }
 
     public void readFromParcel(Parcel in){
@@ -172,6 +202,8 @@ public class Vehicle implements Parcelable {
         updateTime = in.readString();
         longitude = in.readDouble();
         latitude = in.readDouble();
+        deviceId = in.readString();
+        driver = in.readString();
     }
 
     public void update(Vehicle vehicle){

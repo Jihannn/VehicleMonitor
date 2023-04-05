@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface UserService {
-
     User getUser(String username);
     boolean auth(String username, String password);
 
@@ -16,4 +15,5 @@ public interface UserService {
     void addUser(String username, String password);
 
     List<Vehicle> findVehiclesByUserId(int userID);
+    void addUserVehicle(int userId,int vehicleId);
 }

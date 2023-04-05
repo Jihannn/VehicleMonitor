@@ -30,8 +30,8 @@ public class CarDetailViewModel extends BaseViewModel<VehicleRepository> {
         this.mAppExecutors = executors;
     }
 
-    public void getLatestVehicleStatus(int vehicle_id){
-        uri = URI.create("ws://192.168.0.103:8090/?"+"type="+ "detail" +"&token="+ UserManager.getUser() + "&vehicle_id="+vehicle_id);
+    public void getLatestVehicleStatus(String device_id){
+        uri = URI.create("ws://192.168.0.103:8090/?"+"type="+ "detail" +"&token="+ UserManager.getUser() + "&device_id="+device_id);
         client = new VehicleSocketClient(uri){
             @Override
             public void onMessage(String message) {

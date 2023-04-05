@@ -1,13 +1,9 @@
 package com.jihan.monitor.phone.ui;
 
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
 import com.jihan.monitor.lib_common.base.BaseMvvmFragment;
 import com.jihan.monitor.phone.BR;
 import com.jihan.monitor.phone.R;
@@ -18,9 +14,6 @@ import com.jihan.monitor.phone.model.UserManager;
 public class MineFragment extends BaseMvvmFragment<MineViewModel, FragmentMineBinding> {
     @Override
     protected void initView() {
-        mBinding.tbHome.setTitle(R.string.menu_mine);
-        mBinding.tbHome.setTitleTextColor(Color.BLACK);
-        setToolbarTitleCenter(mBinding.tbHome);
         mBinding.btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

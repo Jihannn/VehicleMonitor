@@ -6,8 +6,6 @@ import java.sql.Timestamp;
 
 @Data
 public class VehicleStatus {
-    private int id;
-    private int vehicle_id;
     private String driver;
     private String model;
     private int modelYear;
@@ -19,4 +17,5 @@ public class VehicleStatus {
     private double latitude;
     private double longitude;
     private Timestamp updateTime;
+    private String deviceId;
 }

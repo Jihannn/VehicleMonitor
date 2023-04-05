@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -98,15 +99,33 @@
                 android:text="@string/logout" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_warning"
-            android:layout_width="250dp"
-            android:layout_height="80dp"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/bg_btn"
-            android:text="@string/warning"
-            android:textColor="#2cb2e2"
-            android:textSize="40sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_warning"
+                android:layout_width="250dp"
+                android:layout_height="80dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/bg_btn"
+                android:text="@string/warning"
+                android:textColor="#2cb2e2"
+                android:textSize="40sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_device_id"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/material_white_1000"
+                android:textSize="18sp"
+                tools:text="test123123"/>
+        </RelativeLayout>
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

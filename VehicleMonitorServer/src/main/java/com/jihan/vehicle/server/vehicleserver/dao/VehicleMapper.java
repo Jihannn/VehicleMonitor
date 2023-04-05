@@ -9,10 +9,10 @@ public interface VehicleMapper {
     @Select("SELECT * FROM vehicles WHERE id = #{id}")
     Vehicle selectById(int id);
 
-    @Select("SELECT * FROM vehicles")
-    List<Vehicle> selectAll();
+    @Select("SELECT id, plate_number, brand, model, production_year FROM vehicles WHERE active = true")
+    List<Vehicle> selectAllActive();
 
-    @Insert("INSERT INTO vehicles(plate_number, brand, model, production_year) VALUES (#{plateNumber}, #{brand}, #{model}, #{productionYear})")
+    @Insert("INSERT INTO vehicles(plate_number, brand, model, device_id,applicant) VALUES (#{plate_number}, #{brand}, #{model}, #{device_id}, #{applicant})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(Vehicle vehicle);
 
@@ -21,4 +21,10 @@ public interface VehicleMapper {
 
     @Delete("DELETE FROM vehicles WHERE id = #{id}")
     int delete(int id);
+
+    @Select("SELECT * FROM vehicles WHERE active = false")
+    List<Vehicle> selectVehiclesByActiveFalse();
+
+    @Update("UPDATE vehicles SET active = 1 WHERE id = #{id}")
+    void updateVehiclesActive(int id);
 }

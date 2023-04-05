@@ -6,6 +6,7 @@ import com.jihan.vehicle.server.vehicleserver.entity.Response;
 import com.jihan.vehicle.server.vehicleserver.entity.Vehicle;
 import com.jihan.vehicle.server.vehicleserver.service.VehicleService;
 import com.jihan.vehicle.server.vehicleserver.service.impl.VehicleServiceImpl;
+import com.jihan.vehicle.server.vehicleserver.utils.JWTUtils;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
@@ -17,6 +18,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 客户端登记汽车
+ */
 @WebServlet("/vehicle")
 @Log4j2
 public class VehicleServlet extends HttpServlet {
@@ -59,19 +63,21 @@ public class VehicleServlet extends HttpServlet {
         log.info("post");
         response.setContentType("application/json;charset=utf-8");
         String requestBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-        String token = request.getHeader("Authorization");
+        String token = request.getHeader("token");
         log.info("requestBody:"+requestBody);
         log.info("token:"+token);
         Vehicle vehicle = JSON.parseObject(requestBody, Vehicle.class);
         log.info("vehicle:"+vehicle);
         Response<Void> result = new Response<>();
-        if (vehicle.getPlate_number() == null || vehicle.getBrand() == null || vehicle.getModel() == null) {
+        if (token == null || !JWTUtils.verify(token) || vehicle.getPlate_number() == null || vehicle.getBrand() == null || vehicle.getModel() == null) {
             result.setErrorCode(Constants.CODE_FAILURE);
             result.setErrorMsg("车牌号、品牌、车型不能为空");
         } else {
-//            service.insertVehicle(vehicle);
+            log.info("success");
+            vehicle.setApplicant(JWTUtils.getUsername(token));
+            service.insertVehicle(vehicle);
             result.setErrorCode(Constants.CODE_SUCCESS);
-            result.setErrorMsg("Upload Success");
+            result.setErrorMsg("Success");
         }
         String s = JSON.toJSONString(result);
         response.getWriter().write(s);

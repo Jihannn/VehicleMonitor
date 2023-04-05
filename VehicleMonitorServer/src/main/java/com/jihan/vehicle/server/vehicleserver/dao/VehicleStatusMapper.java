@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface VehicleStatusMapper {
 
-    @Insert("INSERT INTO vehicle_status (driver, model, modelYear, manufacturer, fuelCapacity, fuelLevel, ignitionState, speed, latitude, longitude, updateTime) VALUES (#{driver}, #{model}, #{modelYear}, #{manufacturer}, #{fuelCapacity}, #{fuelLevel}, #{ignitionState}, #{speed}, #{latitude}, #{longitude}, #{updateTime})")
+    @Insert("INSERT INTO vehicle_status (device_id, driver, model, modelYear, manufacturer, fuelCapacity, fuelLevel, ignitionState, speed, latitude, longitude, updateTime) VALUES (#{deviceId}, #{driver}, #{model}, #{modelYear}, #{manufacturer}, #{fuelCapacity}, #{fuelLevel}, #{ignitionState}, #{speed}, #{latitude}, #{longitude}, #{updateTime})")
     boolean insertVehicleStatus(VehicleStatus vehicleStatus);
 
     @Select("SELECT * FROM vehicle_status WHERE driver = #{driver}")
@@ -25,6 +25,6 @@ public interface VehicleStatusMapper {
     @Select("SELECT * FROM vehicle_status")
     List<VehicleStatus> findAll();
 
-    @Select("SELECT * FROM vehicle_status WHERE vehicle_id = #{vehicle_id} ORDER BY updateTime DESC LIMIT 1")
-    VehicleStatus getLatestVehicleStatus(int vehicle_id);
+    @Select("SELECT * FROM vehicle_status WHERE device_id = #{device_id} ORDER BY updateTime DESC LIMIT 1")
+    VehicleStatus getLatestVehicleStatus(String device_id);
 }

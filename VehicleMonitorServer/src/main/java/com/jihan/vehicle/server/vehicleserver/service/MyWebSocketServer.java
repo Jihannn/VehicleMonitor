@@ -32,6 +32,7 @@ public class MyWebSocketServer extends WebSocketServer {
 
     private VehicleStatusServiceImpl service;
 
+
     MyWebSocketServer(InetSocketAddress host){
         super(host);
         service = new VehicleStatusServiceImpl();
@@ -44,21 +45,20 @@ public class MyWebSocketServer extends WebSocketServer {
         log.info("resourceDescriptor:"+resourceDescriptor);
         String token = getTokenValue(resourceDescriptor);
         String type = getTypeValue(resourceDescriptor);
-        String vehicle_id = getVehicleIdValue(resourceDescriptor);
+        String device_id = getDeviceIdValue(resourceDescriptor);
         log.info("token:"+token);
         log.info("type:"+type);
-        log.info("vehicle_id:"+vehicle_id);
+        log.info("device_id:"+device_id);
         // 验证JWT token并获取用户身份（例如用户ID）
         String username = JWTUtils.getUsername(token);
         if (username != null) {
-            // 将连接的WebSocket对象存储在已连接的用户映射中
-            if("detail".equals(type) && vehicle_id != null) {
+            if("detail".equals(type) && device_id != null) {
                 log.info("detail");
                 log.info("User " + username + " connected");
-                if(!connectedUsers.containsKey(username)){
+//                if(!connectedUsers.containsKey(username)){
                     connectedUsers.put(username, conn);
-                    scheduler.scheduleAtFixedRate(() -> sendMessageToUser(username, Integer.parseInt(vehicle_id)), 0, 10, TimeUnit.SECONDS);
-                }
+                    scheduler.scheduleAtFixedRate(() -> sendMessageToUser(username, device_id), 0, 10, TimeUnit.SECONDS);
+//                }
             }else if("warning".equals(type)){
                 log.info("warning");
             }
@@ -98,10 +98,10 @@ public class MyWebSocketServer extends WebSocketServer {
         log.info("websocket"+ "onStart()，WebSocket服务端启动成功");
     }
 
-    public void sendMessageToUser(String username,int vehicle_id) {
+    public void sendMessageToUser(String username,String device_id) {
         WebSocket userConnection = connectedUsers.get(username);
         if (userConnection != null) {
-            VehicleStatus latestVehicleStatus = service.getLatestVehicleStatus(vehicle_id);
+            VehicleStatus latestVehicleStatus = service.getLatestVehicleStatus(device_id);
             String json = JSONObject.toJSONString(latestVehicleStatus);
             log.info("send vehicleStatus:"+json);
             userConnection.send(json);
@@ -131,8 +131,8 @@ public class MyWebSocketServer extends WebSocketServer {
         }
     }
 
-    public static String getVehicleIdValue(String input) {
-        Pattern pattern = Pattern.compile("vehicle_id=([^&]*)");
+    public static String getDeviceIdValue(String input) {
+        Pattern pattern = Pattern.compile("device_id=([^&]*)");
         Matcher matcher = pattern.matcher(input);
         if (matcher.find()) {
             return matcher.group(1);

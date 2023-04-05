@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+/**
+ * 车载端发送警报
+ */
 @WebServlet(value = "/warning")
 @Log4j2
 public class WarningServlet extends HttpServlet {

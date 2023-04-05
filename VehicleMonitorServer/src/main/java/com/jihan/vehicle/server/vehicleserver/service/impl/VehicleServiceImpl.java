@@ -1,7 +1,6 @@
 package com.jihan.vehicle.server.vehicleserver.service.impl;
 
 import com.jihan.vehicle.server.vehicleserver.dao.VehicleMapper;
-import com.jihan.vehicle.server.vehicleserver.entity.User;
 import com.jihan.vehicle.server.vehicleserver.entity.Vehicle;
 import com.jihan.vehicle.server.vehicleserver.service.VehicleService;
 import com.jihan.vehicle.server.vehicleserver.utils.MybatisUtil;
@@ -23,7 +22,7 @@ public class VehicleServiceImpl implements VehicleService {
     public List<Vehicle> selectAllVehicles() {
         try (SqlSession sqlSession = MybatisUtil.getSession()){
             VehicleMapper mapper = sqlSession.getMapper(VehicleMapper.class);
-            return mapper.selectAll();
+            return mapper.selectAllActive();
         }
     }
 
@@ -48,6 +47,22 @@ public class VehicleServiceImpl implements VehicleService {
         try (SqlSession sqlSession = MybatisUtil.getSession()){
             VehicleMapper mapper = sqlSession.getMapper(VehicleMapper.class);
             mapper.delete(id);
+        }
+    }
+
+    @Override
+    public List<Vehicle> selectAllVehiclesByActiveFalse() {
+        try (SqlSession sqlSession = MybatisUtil.getSession()){
+            VehicleMapper mapper = sqlSession.getMapper(VehicleMapper.class);
+            return mapper.selectVehiclesByActiveFalse();
+        }
+    }
+
+    @Override
+    public void updateVehicleActive(int id) {
+        try (SqlSession sqlSession = MybatisUtil.getSession()){
+            VehicleMapper mapper = sqlSession.getMapper(VehicleMapper.class);
+            mapper.updateVehiclesActive(id);
         }
     }
 }

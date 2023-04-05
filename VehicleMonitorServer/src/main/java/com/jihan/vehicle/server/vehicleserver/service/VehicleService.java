@@ -15,4 +15,8 @@ public interface VehicleService {
     void updateVehicle(Vehicle vehicle);
 
     void deleteVehicle(int id);
+
+    List<Vehicle> selectAllVehiclesByActiveFalse();
+
+    void updateVehicleActive(int id);
 }

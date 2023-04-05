@@ -23,6 +23,8 @@ public class CarViewModel extends BaseViewModel<VehicleRepository> {
 
     public MutableLiveData<BaseResponse<List<Vehicle>>> vehicleListLiveData = new MutableLiveData<>();
 
+    public MutableLiveData<Integer> registerLiveData = new MutableLiveData<>();
+
     public CarViewModel(VehicleRepository repository) {
         super(repository);
     }
@@ -44,6 +46,26 @@ public class CarViewModel extends BaseViewModel<VehicleRepository> {
             public void onFailure(Call<BaseResponse<List<Vehicle>>> call, Throwable t) {
                 LogUtils.logI(TAG,"[getVehicleList]-onFailure");
                 vehicleListLiveData.setValue(null);
+            }
+        });
+    }
+
+    public void register(String plateNumber,String brand,String model,String deviceId){
+        mRepository.registerVehicle(new Vehicle(plateNumber, brand, model, deviceId), new Callback<BaseResponse<String>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<String>> call, Response<BaseResponse<String>> resp) {
+                if(resp.body() != null && resp.body().getErrorCode() == Constants.CODE_SUCCESS){
+                    registerLiveData.setValue(Constants.CODE_SUCCESS);
+                }else{
+                    LogUtils.logI(TAG,"[register]-body is null");
+                    registerLiveData.setValue(Constants.CODE_FAILURE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<String>> call, Throwable t) {
+                LogUtils.logI(TAG,"[register]-error"+t.getMessage());
+                registerLiveData.setValue(Constants.CODE_FAILURE);
             }
         });
     }

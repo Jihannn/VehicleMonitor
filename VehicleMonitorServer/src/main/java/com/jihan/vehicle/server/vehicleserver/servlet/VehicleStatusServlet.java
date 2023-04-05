@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+/**
+ * 车载端上传数据
+ */
 @WebServlet("/upload")
 @Log4j2
 public class VehicleStatusServlet extends HttpServlet {

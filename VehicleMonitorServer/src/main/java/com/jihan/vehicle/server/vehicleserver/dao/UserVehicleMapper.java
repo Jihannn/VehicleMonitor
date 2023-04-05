@@ -14,10 +14,10 @@ public interface UserVehicleMapper {
     @Select("SELECT * FROM user_vehicles WHERE user_id = #{userId}")
     List<UserVehicle> getUserVehiclesByUserId(int userId);
 
-    @Select("SELECT v.id, v.plate_number, v.brand, v.model, v.production_year " +
+    @Select("SELECT v.id, v.plate_number, v.brand, v.model, v.production_year, v.device_id " +
             "FROM user_vehicles uv " +
             "JOIN vehicles v ON uv.vehicle_id = v.id " +
-            "WHERE uv.user_id = #{userId}")
+            "WHERE uv.user_id = #{userId} AND active = 1")
     List<Vehicle> findVehiclesByUserId(int userId);
 
     @Insert("INSERT INTO user_vehicles(user_id, vehicle_id) VALUES (#{userId}, #{vehicleId})")

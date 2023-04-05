@@ -30,9 +30,9 @@ public class LoginServlet  extends HttpServlet {
         resp.setContentType("text/html;charset=utf-8");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        log.info("login:"+username+"pwd:"+password+"md5:"+PasswordUtils.md5(password));
+        log.info("login:"+username+"pwd:"+password+"md5:"+PasswordUtils.md5(username+password));
         Response<String> result = new Response<>();
-        if(service.auth(username, PasswordUtils.md5(password))){
+        if(service.auth(username, PasswordUtils.md5(username+password))){
             String token = JWTUtils.createToken(username);
             log.info("token:"+token);
             req.getSession().setAttribute(Constants.TOKEN,token);

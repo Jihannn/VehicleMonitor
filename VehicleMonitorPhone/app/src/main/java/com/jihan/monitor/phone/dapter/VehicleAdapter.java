@@ -34,7 +34,7 @@ public class VehicleAdapter extends BaseQuickAdapter<Vehicle, BaseDataBindingHol
             dataBinding.setVehicle(vehicle);
             dataBinding.executePendingBindings();
             dataBinding.layoutRelative.setOnClickListener(v -> {
-                LogUtils.logI(TAG,"[jump]:");
+                LogUtils.logI(TAG,"[jump]:"+vehicle.toString());
                 CarDetailActivity.Launcher.launch(getContext(),vehicle);
             });
         }

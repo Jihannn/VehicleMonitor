@@ -54,4 +54,12 @@ public class UserServiceImpl implements UserService {
             return mapper.findVehiclesByUserId(userID);
         }
     }
+
+    @Override
+    public void addUserVehicle(int userId, int vehicleId) {
+        try (SqlSession sqlSession = MybatisUtil.getSession()){
+            UserVehicleMapper mapper = sqlSession.getMapper(UserVehicleMapper.class);
+            mapper.addUserVehicle(userId,vehicleId);
+        }
+    }
 }

@@ -56,8 +56,8 @@ public class CarDetailActivity extends BaseMvvmActivity<CarDetailViewModel, Acti
         mBinding.tbHome.setNavigationOnClickListener(v -> CarDetailActivity.super.onBackPressed());
         setToolbarTitleCenter(mBinding.tbHome);
         if(mVehicle != null){
-            LogUtils.logI(TAG,"[loadData]"+mVehicle.getId());
-            mViewModel.getLatestVehicleStatus(mVehicle.getId());
+            LogUtils.logI(TAG,"[loadData]"+mVehicle.toString());
+            mViewModel.getLatestVehicleStatus(mVehicle.getDevice_id());
         }
     }
 

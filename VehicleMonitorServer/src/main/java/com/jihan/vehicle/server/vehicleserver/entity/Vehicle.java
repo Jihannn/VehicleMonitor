@@ -9,4 +9,6 @@ public class Vehicle {
     private String brand;
     private String model;
     private int production_year;
+    private String device_id;
+    private String applicant;
 }

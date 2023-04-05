@@ -14,7 +14,7 @@ public interface VehicleStatusService {
 
     void deleteVehicle(int id);
 
-    VehicleStatus getLatestVehicleStatus(int vehicle_id);
+    VehicleStatus getLatestVehicleStatus(String device_id);
 
     List<VehicleStatus> findAll();
 }

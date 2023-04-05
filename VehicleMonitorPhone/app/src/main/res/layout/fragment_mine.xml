@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,17 +11,146 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         android:orientation="vertical">
+                <FrameLayout
+                    android:id="@+id/userAvatarLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="?attr/actionBarSize"
+                    android:paddingBottom="?attr/actionBarSize"
+                    app:layout_collapseMode="parallax">
+                    <ImageView
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:src="@drawable/ic_car_48dp"
+                        android:layout_gravity="center"
+                        tools:ignore="ContentDescription" />
+                </FrameLayout>
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tb_home"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_fragment_profile_list_corner"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="48dp"
+                android:layout_height="4dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/bg_line_corner" />
+
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/secondary_background_container"
+                android:foreground="?android:selectableItemBackground"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_notification_48dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:text="@string/message"
+                    android:textColor="@color/md_theme_on_secondary_container"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:text="消息中心" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_right_arrow_48dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/secondary_background_container"
+                android:foreground="?android:selectableItemBackground"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_share_48dp"/>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:textColor="@color/md_theme_on_secondary_container"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:text="@string/code" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/md_theme_on_secondary_container"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:text="@string/github" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/secondary_background_container"
+                android:foreground="?android:selectableItemBackground"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/icon_version_48dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:textColor="@color/md_theme_on_secondary_container"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:text="@string/version" />
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_marginTop="32dp"
+                android:id="@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:text="@string/logout"/>
+
+
+        </LinearLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

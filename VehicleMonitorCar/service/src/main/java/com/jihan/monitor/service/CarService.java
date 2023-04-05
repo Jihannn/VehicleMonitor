@@ -23,6 +23,7 @@ import androidx.lifecycle.LifecycleService;
 
 import com.jihan.lib_common.model.BaseResponse;
 import com.jihan.lib_common.network.ServiceCreator;
+import com.jihan.lib_common.utils.DeviceIdUtil;
 import com.jihan.lib_common.utils.LogUtils;
 import com.jihan.monitor.R;
 import com.jihan.monitor.service.binder.VehicleBinder;
@@ -35,6 +36,7 @@ import com.jihan.monitor.service.model.Vehicle;
 import com.jihan.monitor.service.model.VehicleRepository;
 import com.jihan.monitor.service.network.UploadService;
 import com.jihan.monitor.service.utils.LocationProvider;
+import com.jihan.monitor.service.utils.SPUtils;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -161,6 +163,8 @@ public class CarService extends LifecycleService {
         mCar.setFuelCapacity(mCarInfoManager.getFuelCapacity());
         mCar.setFuelLevel(mCarInfoManager.getFuelCapacity() - (float)(Math.random() * 1000));
         mCar.setUpdateTime(String.valueOf(System.currentTimeMillis()));
+        mCar.setDeviceId(DeviceIdUtil.getDeviceId(this));
+        mCar.setDriver(SPUtils.get(SPUtils.KEY_TOKEN,"NaN"));
     }
 
     @Override

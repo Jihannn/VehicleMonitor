@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 
 import com.jihan.lib_common.base.BaseMvvmActivity;
+import com.jihan.lib_common.utils.DeviceIdUtil;
 import com.jihan.lib_common.utils.LogUtils;
 import com.jihan.monitor.BR;
 import com.jihan.monitor.R;
@@ -60,6 +61,7 @@ public class MainActivity extends BaseMvvmActivity<MainViewModel, ActivityMainBi
                 finish();
             }
         });
+        mBinding.tvDeviceId.setText(DeviceIdUtil.getDeviceId(this));
     }
 
     @Override

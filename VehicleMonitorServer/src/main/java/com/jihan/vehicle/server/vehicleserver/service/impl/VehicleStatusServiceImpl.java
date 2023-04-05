@@ -42,10 +42,10 @@ public class VehicleStatusServiceImpl implements VehicleStatusService {
     }
 
     @Override
-    public VehicleStatus getLatestVehicleStatus(int vehicle_id) {
+    public VehicleStatus getLatestVehicleStatus(String device_id) {
         try (SqlSession sqlSession = MybatisUtil.getSession()){
             VehicleStatusMapper mapper = sqlSession.getMapper(VehicleStatusMapper.class);
-            return mapper.getLatestVehicleStatus(vehicle_id);
+            return mapper.getLatestVehicleStatus(device_id);
         }
     }
 }

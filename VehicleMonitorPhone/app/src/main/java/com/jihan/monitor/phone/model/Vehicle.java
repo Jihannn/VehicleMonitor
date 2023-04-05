@@ -12,15 +12,7 @@ public class Vehicle implements Parcelable {
     private String plate_number;
     private String brand;
     private String model;
-    private int production_year;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private String device_id;
 
     public String getPlate_number() {
         return plate_number;
@@ -46,12 +38,15 @@ public class Vehicle implements Parcelable {
         this.model = model;
     }
 
-    public int getProduction_year() {
-        return production_year;
+    public Vehicle(Parcel in){
+        readFromParcel(in);
     }
 
-    public void setProduction_year(int production_year) {
-        this.production_year = production_year;
+    public Vehicle(String plate_number, String brand, String model, String deviceId) {
+        this.plate_number = plate_number;
+        this.brand = brand;
+        this.model = model;
+        this.device_id = deviceId;
     }
 
     @Override
@@ -61,12 +56,24 @@ public class Vehicle implements Parcelable {
                 ", plate_number='" + plate_number + '\'' +
                 ", brand='" + brand + '\'' +
                 ", model='" + model + '\'' +
-                ", production_year=" + production_year +
+                ", device_id='" + device_id + '\'' +
                 '}';
     }
 
-    public Vehicle(Parcel in){
-        readFromParcel(in);
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDevice_id() {
+        return device_id;
+    }
+
+    public void setDevice_id(String device_id) {
+        this.device_id = device_id;
     }
 
     public static final Parcelable.Creator<Vehicle> CREATOR = new Parcelable.Creator<Vehicle>() {
@@ -90,7 +97,7 @@ public class Vehicle implements Parcelable {
         ParcelUtils.writeString(dest,plate_number);
         ParcelUtils.writeString(dest,brand);
         ParcelUtils.writeString(dest,model);
-        ParcelUtils.writeInteger(dest,production_year);
+        ParcelUtils.writeString(dest, device_id);
     }
 
     public void readFromParcel(Parcel in){
@@ -98,6 +105,6 @@ public class Vehicle implements Parcelable {
         plate_number =in.readString();
         brand = in.readString();
         model = in.readString();
-        production_year = in.readInt();
+        device_id = in.readString();
     }
 }
