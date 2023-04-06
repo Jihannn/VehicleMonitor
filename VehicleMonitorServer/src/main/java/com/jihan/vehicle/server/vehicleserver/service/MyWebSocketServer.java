@@ -25,18 +25,26 @@ import java.util.regex.Pattern;
 
 @Log4j2
 public class MyWebSocketServer extends WebSocketServer {
-
     // 用于存储已连接的用户
     private Map<String, WebSocket> connectedUsers = new HashMap<>();
+    private Map<String, WebSocket> connectedWarningUsers = new HashMap<>();
     private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
     private VehicleStatusServiceImpl service;
 
+    private static MyWebSocketServer INSTANCE;
 
-    MyWebSocketServer(InetSocketAddress host){
+    private MyWebSocketServer(InetSocketAddress host){
         super(host);
         service = new VehicleStatusServiceImpl();
     }
+
+    public static synchronized MyWebSocketServer getInstance(){
+        if(INSTANCE == null){
+            INSTANCE = new MyWebSocketServer(new InetSocketAddress(8090));
+        }
+        return INSTANCE;
+    }
+
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
         log.info("websocket"+ "onOpen()一个客户端连接成功："+conn.getRemoteSocketAddress());
@@ -51,16 +59,18 @@ public class MyWebSocketServer extends WebSocketServer {
         log.info("device_id:"+device_id);
         // 验证JWT token并获取用户身份（例如用户ID）
         String username = JWTUtils.getUsername(token);
+        log.info("User:" + username);
         if (username != null) {
             if("detail".equals(type) && device_id != null) {
                 log.info("detail");
                 log.info("User " + username + " connected");
 //                if(!connectedUsers.containsKey(username)){
-                    connectedUsers.put(username, conn);
-                    scheduler.scheduleAtFixedRate(() -> sendMessageToUser(username, device_id), 0, 10, TimeUnit.SECONDS);
+                connectedUsers.put(username, conn);
+                scheduler.scheduleAtFixedRate(() -> sendMessageToUser(username, device_id), 0, 10, TimeUnit.SECONDS);
 //                }
             }else if("warning".equals(type)){
                 log.info("warning");
+                connectedWarningUsers.put(username,conn);
             }
         } else {
             // 如果JWT token无效，关闭连接
@@ -68,10 +78,12 @@ public class MyWebSocketServer extends WebSocketServer {
             log.info("username is null");
         }
     }
+
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         log.info("websocket"+ "onClose()服务器关闭");
     }
+
     @Override
     public void onMessage(WebSocket conn, String message) {
         // 这里在网页测试端发过来的是文本数据 测试网页 http://www.websocket-test.com/
@@ -79,6 +91,7 @@ public class MyWebSocketServer extends WebSocketServer {
         log.info("websocket"+"onMessage()网页端来的消息->"+message);
         conn.send("server-收到");
     }
+
     @Override
     public void onMessage(WebSocket conn, ByteBuffer message) {
         // 接收到的是Byte数据，需要转成文本数据，根据你的客户端要求
@@ -86,6 +99,7 @@ public class MyWebSocketServer extends WebSocketServer {
         log.info("websocket"+ "onMessage()接收到ByteBuffer的数据->"+ ByteUtils.byteBufferToString(message));
         conn.send("server-收到");
     }
+
     @SneakyThrows
     @Override
     public void onError(WebSocket conn, Exception ex) {
@@ -93,6 +107,7 @@ public class MyWebSocketServer extends WebSocketServer {
         // 可以在这里回调处理，关闭连接，开个线程重新连接调用startMyWebsocketServer()
         log.info("websocket"+ "->onError()出现异常："+ex);
     }
+
     @Override
     public void onStart() {
         log.info("websocket"+ "onStart()，WebSocket服务端启动成功");
@@ -139,5 +154,15 @@ public class MyWebSocketServer extends WebSocketServer {
         } else {
             return null;
         }
+    }
+
+    public void processWarningMessage(String username, String message) {
+        sendWarningMessageToUser(username, message);
+    }
+
+    private void sendWarningMessageToUser(String username, String message){
+        log.info("sendWarningMessageToUser"+username+"-"+message);
+        WebSocket socket = connectedWarningUsers.get(username);
+        socket.send(message);
     }
 }

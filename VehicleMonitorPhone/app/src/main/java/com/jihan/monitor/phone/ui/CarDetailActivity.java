@@ -24,9 +24,7 @@ public class CarDetailActivity extends BaseMvvmActivity<CarDetailViewModel, Acti
     private static final String TAG = TAG_PHONE + CarDetailActivity.class.getSimpleName();
     private Vehicle mVehicle;
     public static class Launcher{
-
         private static final String PARCEL_VEHICLE = "vehicle";
-
         public static void launch(Context context, Vehicle vehicle){
             Intent intent = new Intent(context, CarDetailActivity.class);
             Bundle bundle = new Bundle();

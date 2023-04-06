@@ -34,4 +34,9 @@ public class VehicleRepository extends BaseRepository {
         Call<BaseResponse<String>> call = mVehicleService.registerVehicle(vehicle);
         call.enqueue(callback);
     }
+
+    public void getWarningMessageList(Callback<BaseResponse<List<WarningMessage>>> callback){
+        Call<BaseResponse<List<WarningMessage>>> call = mVehicleService.getWarningMessageList();
+        call.enqueue(callback);
+    }
 }

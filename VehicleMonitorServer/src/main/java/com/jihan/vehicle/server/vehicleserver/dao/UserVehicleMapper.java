@@ -1,5 +1,6 @@
 package com.jihan.vehicle.server.vehicleserver.dao;
 
+import com.jihan.vehicle.server.vehicleserver.entity.User;
 import com.jihan.vehicle.server.vehicleserver.entity.UserVehicle;
 import com.jihan.vehicle.server.vehicleserver.entity.Vehicle;
 import org.apache.ibatis.annotations.Delete;
@@ -28,5 +29,12 @@ public interface UserVehicleMapper {
 
     @Select("SELECT * FROM user_vehicles WHERE vehicle_id = #{vehicleId}")
     List<UserVehicle> getUserVehiclesByVehicleId(int vehicleId);
+
+    @Select("SELECT users.username " +
+            "FROM users " +
+            "JOIN user_vehicles ON users.id = user_vehicles.user_id " +
+            "JOIN vehicles ON user_vehicles.vehicle_id = vehicles.id " +
+            "WHERE vehicles.device_id = #{device_id}")
+    String getUsernameByDeviceId(@Param("device_id") String deviceId);
 
 }

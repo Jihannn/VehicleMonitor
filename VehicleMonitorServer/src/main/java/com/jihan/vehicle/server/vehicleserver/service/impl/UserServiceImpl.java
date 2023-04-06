@@ -62,4 +62,12 @@ public class UserServiceImpl implements UserService {
             mapper.addUserVehicle(userId,vehicleId);
         }
     }
+
+    @Override
+    public String getUsernameByDeviceId(String deviceId) {
+        try (SqlSession sqlSession = MybatisUtil.getSession()){
+            UserVehicleMapper mapper = sqlSession.getMapper(UserVehicleMapper.class);
+            return mapper.getUsernameByDeviceId(deviceId);
+        }
+    }
 }

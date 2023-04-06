@@ -21,7 +21,7 @@ import retrofit2.Response;
 public class CarViewModel extends BaseViewModel<VehicleRepository> {
     private static final String TAG = TAG_PHONE + CarViewModel.class.getSimpleName();
 
-    public MutableLiveData<BaseResponse<List<Vehicle>>> vehicleListLiveData = new MutableLiveData<>();
+    public MutableLiveData<Response<BaseResponse<List<Vehicle>>>> vehicleListLiveData = new MutableLiveData<>();
 
     public MutableLiveData<Integer> registerLiveData = new MutableLiveData<>();
 
@@ -35,7 +35,9 @@ public class CarViewModel extends BaseViewModel<VehicleRepository> {
             public void onResponse(Call<BaseResponse<List<Vehicle>>> call, Response<BaseResponse<List<Vehicle>>> resp) {
                 if(resp.body() != null && resp.body().getErrorCode() == Constants.CODE_SUCCESS){
                     LogUtils.logI(TAG,"[getVehicleList]-success："+resp.body().toString());
-                    vehicleListLiveData.setValue(resp.body());
+                    vehicleListLiveData.setValue(resp);
+                }else if(resp.body() != null && resp.body().getErrorCode() == Constants.CODE_TOKEN_PASS){
+                    vehicleListLiveData.setValue(resp);
                 }else{
                     LogUtils.logI(TAG,"[getVehicleList]-failure");
                     vehicleListLiveData.setValue(null);

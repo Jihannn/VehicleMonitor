@@ -14,6 +14,7 @@ import com.jihan.monitor.phone.ui.CarViewModel;
 import com.jihan.monitor.phone.ui.LoginViewModel;
 import com.jihan.monitor.phone.ui.MainViewModel;
 import com.jihan.monitor.phone.ui.MineViewModel;
+import com.jihan.monitor.phone.ui.WarningMessageViewModel;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -27,21 +28,23 @@ class AppViewModelFactory implements ViewModelProvider.Factory {
         try {
             if (modelClass == LoginViewModel.class) {
                 return modelClass.getConstructor(UserRepository.class)
-                        .newInstance(AppInjection.getLoginRepository
-                                ());
+                        .newInstance(AppInjection.getLoginRepository());
             }else if (modelClass == CarViewModel.class) {
                 return modelClass.getConstructor(VehicleRepository.class)
                         .newInstance(AppInjection.getVehicleRepository());
             } else if (modelClass == MainViewModel.class) {
-                return modelClass.getConstructor()
-                        .newInstance();
+                return modelClass.getConstructor(AppExecutors.class)
+                        .newInstance(AppExecutors.get());
             }  else if (modelClass == CarDetailViewModel.class) {
                 return modelClass.getConstructor(VehicleRepository.class, AppExecutors.class)
                         .newInstance(AppInjection.getVehicleRepository(),AppExecutors.get());
             } else if (modelClass == MineViewModel.class) {
                 return modelClass.getConstructor()
                         .newInstance();
-            }  else {
+            } else if (modelClass == WarningMessageViewModel.class) {
+                return modelClass.getConstructor(VehicleRepository.class)
+                        .newInstance(AppInjection.getVehicleRepository());
+            } else {
                 throw new RuntimeException(modelClass.getSimpleName() + "create failed");
             }
         } catch (NoSuchMethodException | IllegalAccessException

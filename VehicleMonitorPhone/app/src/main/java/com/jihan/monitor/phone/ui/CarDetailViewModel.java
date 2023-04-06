@@ -17,11 +17,8 @@ import java.net.URI;
 
 public class CarDetailViewModel extends BaseViewModel<VehicleRepository> {
     private static final String TAG = TAG_PHONE + CarDetailViewModel.class.getSimpleName();
-
     public MutableLiveData<VehicleStatus> vehicleStatusLiveData = new MutableLiveData<>();
-
     private final AppExecutors mAppExecutors;
-
     public URI uri;
     public VehicleSocketClient client;
 
@@ -31,7 +28,7 @@ public class CarDetailViewModel extends BaseViewModel<VehicleRepository> {
     }
 
     public void getLatestVehicleStatus(String device_id){
-        uri = URI.create("ws://192.168.0.103:8090/?"+"type="+ "detail" +"&token="+ UserManager.getUser() + "&device_id="+device_id);
+        uri = URI.create("ws://192.168.0.103:8090/?"+ "type=" + "detail" + "&token="+ UserManager.getUser() + "&device_id=" + device_id);
         client = new VehicleSocketClient(uri){
             @Override
             public void onMessage(String message) {
@@ -53,4 +50,5 @@ public class CarDetailViewModel extends BaseViewModel<VehicleRepository> {
         client.close();
         client = null;
     }
+
 }

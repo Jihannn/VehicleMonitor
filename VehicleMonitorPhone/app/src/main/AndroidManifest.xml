@@ -5,6 +5,12 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 解锁屏幕需要的权限 -->
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <!-- 申请电源锁需要的权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!--震动权限-->
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -28,6 +34,8 @@
         </activity>
         <activity android:name=".ui.MainActivity"/>
         <activity android:name=".ui.CarDetailActivity"/>
+        <activity android:name=".ui.WarningMessageActivity"/>
+        <service android:name=".network.VehicleSocketClientService"/>
     </application>
 
 </manifest>

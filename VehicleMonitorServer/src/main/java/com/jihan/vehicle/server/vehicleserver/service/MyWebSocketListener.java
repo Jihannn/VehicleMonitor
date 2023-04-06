@@ -12,9 +12,7 @@ public class MyWebSocketListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        int port = 8090;
-        InetSocketAddress address = new InetSocketAddress(port);
-        webSocketServer = new MyWebSocketServer(address);
+        webSocketServer = MyWebSocketServer.getInstance();
         webSocketServer.start();
         System.out.println("WebSocket Server started on port: " + webSocketServer.getPort());
     }

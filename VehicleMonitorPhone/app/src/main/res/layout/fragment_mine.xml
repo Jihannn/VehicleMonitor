@@ -43,6 +43,7 @@
                 android:background="@drawable/bg_line_corner" />
 
             <LinearLayout
+                android:id="@+id/ll_message"
                 android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"

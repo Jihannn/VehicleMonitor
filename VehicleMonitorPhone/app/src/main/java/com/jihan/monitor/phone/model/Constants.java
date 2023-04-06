@@ -10,6 +10,7 @@ public class Constants {
 
     public static final int CODE_SUCCESS = 200;
     public static final int CODE_FAILURE = 400;
+    public static final int CODE_TOKEN_PASS = 500;
     public static final Interceptor TOKEN_INTERCEPTOR = new Interceptor() {
         @Override
         public Response intercept(Interceptor.Chain chain) throws IOException {

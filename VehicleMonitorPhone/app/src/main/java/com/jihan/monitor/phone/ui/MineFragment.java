@@ -1,10 +1,13 @@
 package com.jihan.monitor.phone.ui;
 
+import static com.jihan.monitor.phone.PhoneApplication.TAG_PHONE;
+
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 import com.jihan.monitor.lib_common.base.BaseMvvmFragment;
+import com.jihan.monitor.lib_common.utils.LogUtils;
 import com.jihan.monitor.phone.BR;
 import com.jihan.monitor.phone.R;
 import com.jihan.monitor.phone.databinding.FragmentMineBinding;
@@ -12,14 +15,23 @@ import com.jihan.monitor.phone.factory.AppInjection;
 import com.jihan.monitor.phone.model.UserManager;
 
 public class MineFragment extends BaseMvvmFragment<MineViewModel, FragmentMineBinding> {
+    private static final String TAG = TAG_PHONE + MineFragment.class.getSimpleName();
     @Override
     protected void initView() {
         mBinding.btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogUtils.logI(TAG,"[logout]");
                 UserManager.logout();
                 LoginActivity.LAUNCHER.launch(getContext());
                 getActivity().finish();
+            }
+        });
+        mBinding.llMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogUtils.logI(TAG,"[llMessage]");
+                WarningMessageActivity.LAUNCHER.launch(getContext());
             }
         });
     }

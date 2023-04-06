@@ -40,8 +40,8 @@ public class UserVehiclesServlet extends HttpServlet {
         if(token == null || !JWTUtils.verify(token)){
             log.info((token == null) +"-" + !JWTUtils.verify(token));
             baseResponse.setData(null);
-            baseResponse.setErrorCode(Constants.CODE_FAILURE);
-            baseResponse.setErrorMsg("Success");
+            baseResponse.setErrorCode(Constants.CODE_TOKEN_PASS);
+            baseResponse.setErrorMsg("Token过期");
         }else{
             User user = service.getUser(JWTUtils.getUsername(token));
             request.getSession().setAttribute(Constants.USER,user);
@@ -58,7 +58,6 @@ public class UserVehiclesServlet extends HttpServlet {
                 baseResponse.setErrorCode(Constants.CODE_FAILURE);
                 baseResponse.setErrorMsg("用户名下没有任何车辆");
             }
-
         }
         response.getWriter().write(JSON.toJSONString(baseResponse));
     }

@@ -26,9 +26,13 @@ import com.jihan.monitor.phone.R;
 import com.jihan.monitor.phone.dapter.VehicleAdapter;
 import com.jihan.monitor.phone.databinding.FragmentCarBinding;
 import com.jihan.monitor.phone.factory.AppInjection;
+import com.jihan.monitor.phone.model.Constants;
+import com.jihan.monitor.phone.model.UserManager;
 import com.jihan.monitor.phone.model.Vehicle;
 
 import java.util.List;
+
+import retrofit2.Response;
 
 public class CarFragment extends BaseMvvmFragment<CarViewModel, FragmentCarBinding> {
 
@@ -88,15 +92,21 @@ public class CarFragment extends BaseMvvmFragment<CarViewModel, FragmentCarBindi
         mViewModel.getVehicleList();
     }
 
-    private void handlerVehicleList(BaseResponse<List<Vehicle>> resp){
+    private void handlerVehicleList(Response<BaseResponse<List<Vehicle>>> resp){
         mBinding.includeList.layoutRefresh.setRefreshing(false);
         mBinding.includeList.layoutRefresh.setEnabled(true);
         if(resp == null){
             LogUtils.logI(TAG,"[handlerVehicleList]resp is null");
             return;
+        }else if(resp.body().getErrorCode() == Constants.CODE_TOKEN_PASS){
+            LogUtils.logI(TAG,"[token 过期]");
+            UserManager.logout();
+            LoginActivity.LAUNCHER.launch(getContext());
+            getActivity().finish();
+            return;
         }
-        LogUtils.logI(TAG,"[handlerVehicleList]"+resp.getData().toString());
-        List<Vehicle> vehicleList = resp.getData();
+        LogUtils.logI(TAG,"[handlerVehicleList]"+resp.body().getData().toString());
+        List<Vehicle> vehicleList = resp.body().getData();
         if(vehicleList != null){
             mAdapter.setList(vehicleList);
             BaseLoadMoreModule loadMoreModule = mAdapter.getLoadMoreModule();

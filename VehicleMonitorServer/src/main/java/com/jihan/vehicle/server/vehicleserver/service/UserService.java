@@ -16,4 +16,6 @@ public interface UserService {
 
     List<Vehicle> findVehiclesByUserId(int userID);
     void addUserVehicle(int userId,int vehicleId);
+
+    String getUsernameByDeviceId(String deviceId);
 }
